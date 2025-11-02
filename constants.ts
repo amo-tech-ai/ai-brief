@@ -1,34 +1,33 @@
-import { Step, StepInfo } from './types';
+import { StageInfo, MainStage } from './types';
 
-export const STEPS: StepInfo[] = [
+export const MAIN_STAGES: StageInfo[] = [
   {
-    id: Step.DETAILS,
-    title: '1. Enter Details',
-    description: 'Provide your contact information to be included on the slide.',
+    id: MainStage.SCOPE,
+    title: '1. Scope',
+    description: 'Start your project. Use AI or work with an expert to build a custom scope to share with agencies.',
   },
   {
-    id: Step.GENERATE,
-    title: '2. Generate Slide',
-    description: 'Our AI will design a professional profile slide based on your details.',
+    id: MainStage.PITCHES,
+    title: '2. Pitches',
+    description: 'Get custom pitches from vetted agencies, hand-picked for your scope, brand and goals.',
   },
   {
-    id: Step.RESULT,
-    title: '3. Review & Download',
-    description: 'Review the generated slide and download your new professional asset.',
+    id: MainStage.AGENCY,
+    title: '3. Agency',
+    description: 'Once you select the perfect agency, manage all contracts and payments in one place.',
   },
 ];
 
-export const LOADING_MESSAGES: string[] = [
-  "Warming up the design AI...",
-  "Sketching out a few concepts...",
-  "Choosing the perfect font...",
-  "Applying the color palette...",
-  "Arranging the layout...",
-  "Adding the finishing touches...",
-  "Preparing your slide for download...",
+export const AGENCY_TYPES: string[] = [
+    'Organic Social Media', 'Paid Advertising', 'Website Design', 'SEO',
+    'Launch Campaign', 'Graphic Design', 'Branding', 'Content Creation',
+    'Digital Marketing', 'Public Relations', 'Email Marketing', 'Copywriting',
+    'Video Production', 'Influencer Marketing'
 ];
 
-// Fix: Added WIZARD_ROUTES to resolve compilation error in components/FooterNav.tsx
-export const WIZARD_ROUTES = [
-  { path: '#/brief/new', label: 'New Brief' },
+export const BUDGET_RANGES: string[] = [
+    '$5K - $25K',
+    '$25K - $50K',
+    '$50K - $100K',
+    '$100K+'
 ];

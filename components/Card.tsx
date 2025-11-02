@@ -1,26 +1,25 @@
-
 import React from 'react';
-import { DotsIcon } from './icons';
 
 interface CardProps {
   children: React.ReactNode;
-  title: string;
-  headerContent?: React.ReactNode;
+  header: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
-const Card: React.FC<CardProps> = ({ children, title, headerContent }) => {
+const Card: React.FC<CardProps> = ({ children, header, footer }) => {
   return (
     <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden w-full transform transition-all duration-500 hover:shadow-2xl">
-      <div className="px-6 py-4 bg-gray-50/50 border-b border-gray-100 flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-            <DotsIcon />
-            {headerContent}
-        </div>
-        <p className="text-gray-400 font-medium text-sm tracking-wider">{title}</p>
+      <div className="px-6 py-3 bg-gray-50/50 border-b border-gray-100 flex justify-between items-center min-h-[60px]">
+        {header}
       </div>
       <div className="p-8">
         {children}
       </div>
+      {footer && (
+        <div className="px-8 pb-8 flex items-center">
+          {footer}
+        </div>
+      )}
     </div>
   );
 };
