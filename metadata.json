@@ -1,5 +1,5 @@
 {
-  "name": "AI Profile Slide Generator",
-  "description": "An application that uses AI to generate a professional profile slide with contact information.",
+  "name": "AI Brief Generator",
+  "description": "Turn simple ideas or business goals into a complete, professional project brief using an AI-powered wizard.",
   "requestFramePermissions": []
 }
