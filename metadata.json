@@ -1,5 +1,5 @@
 {
-  "name": "AI Agency Brief & Video Generator",
-  "description": "An application that uses AI to generate a plan for an animated infographic and then creates a video based on a user prompt using the Veo model.",
+  "name": "AI Profile Slide Generator",
+  "description": "An application that uses AI to generate a professional profile slide with contact information.",
   "requestFramePermissions": []
 }

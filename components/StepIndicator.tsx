@@ -11,11 +11,11 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({ currentStep, steps }) => 
   return (
     <div className="space-y-12">
       <div>
-        <p className="text-orange-500 font-semibold tracking-widest text-sm mb-4">HOW IT WORKS</p>
+        <p className="text-orange-500 font-semibold tracking-widest text-sm mb-4">AMO AI</p>
         <h1 className="text-5xl md:text-6xl font-light text-gray-800 leading-tight">
-          The <i className="font-serif italic font-medium">smarter</i> agency
+          Profile Slide
           <br />
-          search
+          <i className="font-serif italic font-medium">Generator</i>
         </h1>
       </div>
       <div className="space-y-10">

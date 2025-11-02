@@ -1,90 +1,53 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import Card from './Card';
 import Button from './Button';
 
 interface ResultDisplayProps {
-  plan: string;
-  videoUrl: string;
+  imageUrl: string;
   onRestart: () => void;
-  onRegenerate: () => void;
 }
 
-const ResultDisplay: React.FC<ResultDisplayProps> = ({ plan, videoUrl, onRestart, onRegenerate }) => {
-  const [isPreviewing, setIsPreviewing] = useState(true);
+const ResultDisplay: React.FC<ResultDisplayProps> = ({ imageUrl, onRestart }) => {
 
-  if (isPreviewing) {
-    return (
-      <Card title="Preview">
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-2xl font-semibold text-gray-800 mb-4 text-center">Review Your Video</h3>
-            {videoUrl ? (
-              <video
-                src={videoUrl}
-                controls
-                className="w-full rounded-lg shadow-md bg-black"
-                autoPlay
-                muted
-                loop
-              >
-                Your browser does not support the video tag.
-              </video>
-            ) : (
-                <div className="w-full aspect-video bg-gray-200 rounded-lg flex items-center justify-center">
-                    <p className="text-gray-500">Loading video...</p>
-                </div>
-            )}
-          </div>
-          
-          <p className="text-center text-gray-500 px-4">
-            Watch the generated video. If you're happy with it, accept to finalize. Otherwise, you can go back and regenerate it.
-          </p>
-
-          <div className="flex justify-center items-center gap-4 pt-4">
-            <Button 
-              onClick={onRegenerate} 
-              className="bg-white text-gray-800 border border-gray-300 hover:bg-gray-100 focus:ring-gray-300"
-            >
-              Regenerate
-            </Button>
-            <Button onClick={() => setIsPreviewing(false)}>
-              Accept & Finalize
-            </Button>
-          </div>
-        </div>
-      </Card>
-    );
-  }
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = 'profile-slide.png';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
-    <Card title="Results">
-      <div className="space-y-8">
+    <Card title="Your Slide is Ready">
+      <div className="space-y-6">
         <div>
-          <h3 className="text-xl font-semibold text-gray-800 mb-3 border-b pb-2">Animation Plan</h3>
-          <pre className="bg-gray-50 p-4 rounded-lg text-gray-700 whitespace-pre-wrap text-sm leading-relaxed overflow-x-auto max-h-96">
-            {plan}
-          </pre>
+          <h3 className="text-2xl font-semibold text-gray-800 mb-4 text-center">Review & Download</h3>
+          {imageUrl ? (
+            <img
+              src={imageUrl}
+              alt="Generated Profile Slide"
+              className="w-full rounded-lg shadow-md bg-gray-200"
+            />
+          ) : (
+              <div className="w-full aspect-video bg-gray-200 rounded-lg flex items-center justify-center">
+                  <p className="text-gray-500">Loading image...</p>
+              </div>
+          )}
         </div>
-
-        {videoUrl && (
-          <div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-3 border-b pb-2">Generated Video</h3>
-            <video
-              src={videoUrl}
-              controls
-              className="w-full rounded-lg shadow-md"
-              autoPlay
-              muted
-              loop
-            >
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        )}
         
-        <div className="text-center pt-4">
-          <Button onClick={onRestart}>Start Over</Button>
+        <p className="text-center text-gray-500 px-4">
+          Here is your AI-generated profile slide. You can download it or start over to create a new one.
+        </p>
+
+        <div className="flex justify-center items-center gap-4 pt-4">
+          <Button onClick={onRestart} variant="secondary">
+            Start Over
+          </Button>
+          <Button onClick={handleDownload} disabled={!imageUrl}>
+            Download Slide
+          </Button>
         </div>
       </div>
     </Card>

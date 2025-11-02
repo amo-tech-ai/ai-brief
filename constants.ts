@@ -1,62 +1,34 @@
-
-import { Step, StepInfo, WizardStep } from './types';
+import { Step, StepInfo } from './types';
 
 export const STEPS: StepInfo[] = [
   {
-    id: Step.PLAN,
-    title: '1. Build Brief',
-    description: 'Start your project. Use the wizard to build a custom project brief.',
+    id: Step.DETAILS,
+    title: '1. Enter Details',
+    description: 'Provide your contact information to be included on the slide.',
   },
   {
-    id: Step.VIDEO,
-    title: '2. Generate',
-    description: 'Use AI to generate a high-quality video based on your brief and creative prompt.',
+    id: Step.GENERATE,
+    title: '2. Generate Slide',
+    description: 'Our AI will design a professional profile slide based on your details.',
   },
   {
     id: Step.RESULT,
-    title: '3. Review',
-    description: 'Review the generated plan and video. Manage all assets in one place.',
+    title: '3. Review & Download',
+    description: 'Review the generated slide and download your new professional asset.',
   },
 ];
 
-export const BUDGET_OPTIONS = [
-    '$5K - $25K',
-    '$25K - $50K',
-    '$50K - $100K',
-    '$100K +',
-];
-
-export const CATEGORY_OPTIONS = [
-    'AI Web App',
-    'Automation',
-    'AI Agents',
-    'Social Media',
-    'Organic Social Media',
-    'Paid Advertising',
-    'Website Design',
-    'SEO',
-    'Launch Campaign',
-    'Graphic Design',
-    'Branding',
-    'Content Creation',
-];
-
-
 export const LOADING_MESSAGES: string[] = [
-  "Warming up the AI director...",
-  "Setting up the virtual cameras...",
-  "Script is locked, action!",
-  "Rendering the first few frames...",
-  "Applying special effects and color grading...",
-  "This is looking great, almost there...",
-  "Adding the final touches...",
-  "Finalizing the video masterpiece...",
+  "Warming up the design AI...",
+  "Sketching out a few concepts...",
+  "Choosing the perfect font...",
+  "Applying the color palette...",
+  "Arranging the layout...",
+  "Adding the finishing touches...",
+  "Preparing your slide for download...",
 ];
 
+// Fix: Added WIZARD_ROUTES to resolve compilation error in components/FooterNav.tsx
 export const WIZARD_ROUTES = [
-  { path: "#/brief/new", label: "Welcome", step: WizardStep.WELCOME },
-  { path: "#/brief/scope", label: "Scope", step: WizardStep.SCOPE },
-  { path: "#/brief/categories", label: "Categories", step: WizardStep.CATEGORY },
-  { path: "#/brief/review", label: "Review", step: WizardStep.REVIEW },
-  { path: "#/brief/finalize", label: "Finalize", step: WizardStep.FINALIZE },
+  { path: '#/brief/new', label: 'New Brief' },
 ];
