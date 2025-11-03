@@ -248,3 +248,9 @@ export const DocumentDuplicateIcon: React.FC<{ className?: string }> = ({ classN
         <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 8.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v8.25A2.25 2.25 0 006 16.5h2.25m8.25-8.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-7.5A2.25 2.25 0 018.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 00-2.25 2.25v6" />
     </SVGIcon>
 );
+
+export const CurrencyDollarIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
+  <SVGIcon className={className}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182.553-.44 1.278-.659 2.003-.659.725 0 1.45.22 2.003.659l.879.659m0 0c1.171.879 1.171 2.303 0 3.182C13.536 14.781 12.768 15 12 15c-.725 0-1.45-.22-2.003-.659m0 0l-.879-.659m-1.172 0l1.172.879m1.172 0l-1.172.879" />
+  </SVGIcon>
+);

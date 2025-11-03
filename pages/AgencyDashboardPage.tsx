@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Brief } from '../types';
 import { getBriefs } from '../utils/briefs';
-import { ArrowRightIcon, ChartBarIcon, UsersIcon, ClockIcon } from '../components/icons';
+import { ArrowRightIcon, ChartBarIcon, UsersIcon, ClockIcon, CurrencyDollarIcon } from '../components/icons';
 import { getClients, Client } from '../utils/clients';
 
 const KPICard: React.FC<{ title: string; value: string | number; icon: React.ReactNode }> = ({ title, value, icon }) => (
@@ -16,16 +16,83 @@ const KPICard: React.FC<{ title: string; value: string | number; icon: React.Rea
     </div>
 );
 
+const KPICardSkeleton: React.FC = () => (
+    <div className="bg-white p-6 rounded-2xl border border-breef-border shadow-sm animate-pulse">
+        <div className="flex items-start justify-between">
+            <div>
+                <div className="h-4 bg-gray-200 rounded w-24 mb-2"></div>
+                <div className="h-10 bg-gray-200 rounded w-32"></div>
+            </div>
+            <div className="bg-gray-200 p-3 rounded-lg w-12 h-12"></div>
+        </div>
+    </div>
+);
+
+const RecentBriefsSkeleton: React.FC = () => (
+    <div className="bg-white rounded-2xl border border-breef-border shadow-sm overflow-hidden animate-pulse">
+        <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+                <thead className="bg-gray-50">
+                    <tr>
+                        <th className="px-6 py-3 text-left"><div className="h-4 bg-gray-200 rounded w-20"></div></th>
+                        <th className="px-6 py-3 text-left"><div className="h-4 bg-gray-200 rounded w-24"></div></th>
+                        <th className="px-6 py-3 text-left"><div className="h-4 bg-gray-200 rounded w-16"></div></th>
+                        <th className="px-6 py-3 text-left"><div className="h-4 bg-gray-200 rounded w-12"></div></th>
+                    </tr>
+                </thead>
+                <tbody className="divide-y divide-breef-border">
+                    {[...Array(5)].map((_, i) => (
+                        <tr key={i}>
+                            <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-40"></div></td>
+                            <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-32"></div></td>
+                            <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-24"></div></td>
+                            <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-10"></div></td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    </div>
+);
+
+const TopClientsSkeleton: React.FC = () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-pulse">
+        {[...Array(3)].map((_, i) => (
+            <div key={i} className="bg-white p-6 rounded-2xl border border-breef-border shadow-sm">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-gray-200"></div>
+                    <div>
+                        <div className="h-5 bg-gray-200 rounded w-28 mb-2"></div>
+                        <div className="h-4 bg-gray-200 rounded w-20"></div>
+                    </div>
+                </div>
+                <div className="mt-4 pt-4 border-t border-breef-border flex justify-between items-center">
+                    <div className="h-4 bg-gray-200 rounded w-24"></div>
+                    <div className="w-5 h-5 bg-gray-200 rounded"></div>
+                </div>
+            </div>
+        ))}
+    </div>
+);
+
 const AgencyDashboardPage: React.FC = () => {
-    // In a real app, this data would come from a backend. For now, we derive it.
-    const allBriefs = getBriefs();
-    const allClients = getClients();
+    const [loading, setLoading] = useState(true);
+    const [allBriefs, setAllBriefs] = useState<Brief[]>([]);
+    const [allClients, setAllClients] = useState<Client[]>([]);
+
+    useEffect(() => {
+        // Simulate loading from an API
+        setTimeout(() => {
+            setAllBriefs(getBriefs());
+            setAllClients(getClients());
+            setLoading(false);
+        }, 1000); // 1-second delay for demonstration
+    }, []);
 
     const kpiData = {
-        totalBriefs: allBriefs.length,
-        activeClients: allClients.length,
-        thisMonthBriefs: allBriefs.filter(b => new Date(b.createdAt).getMonth() === new Date().getMonth()).length,
-        teamMembers: 4, // Mock data
+        revenueThisMonth: '$25,650',
+        totalClients: allClients.length,
+        avgProjectDuration: '6 Weeks',
     };
 
     const recentBriefs = allBriefs.slice(0, 5);
@@ -47,71 +114,93 @@ const AgencyDashboardPage: React.FC = () => {
                 </a>
             </header>
             
-            {/* KPI Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                <KPICard title="Total Briefs" value={kpiData.totalBriefs} icon={<ChartBarIcon className="w-6 h-6"/>} />
-                <KPICard title="Active Clients" value={kpiData.activeClients} icon={<UsersIcon className="w-6 h-6"/>} />
-                <KPICard title="This Month" value={kpiData.thisMonthBriefs} icon={<ClockIcon className="w-6 h-6"/>} />
-                <KPICard title="Team Members" value={kpiData.teamMembers} icon={<UsersIcon className="w-6 h-6"/>} />
-            </div>
-
-            {/* Recent Briefs */}
-            <div className="mb-12">
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-bold text-breef-text-primary">Recent Briefs</h2>
-                    <a href="#/dashboard" className="text-sm font-semibold text-amo-orange hover:underline">View All</a>
-                </div>
-                <div className="bg-white rounded-2xl border border-breef-border shadow-sm overflow-hidden">
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-sm">
-                            <thead className="bg-gray-50">
-                                <tr>
-                                    <th className="px-6 py-3 text-left font-semibold text-breef-text-secondary">Brief Name</th>
-                                    <th className="px-6 py-3 text-left font-semibold text-breef-text-secondary">Client</th>
-                                    <th className="px-6 py-3 text-left font-semibold text-breef-text-secondary">Date</th>
-                                    <th className="px-6 py-3 text-left font-semibold text-breef-text-secondary">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-breef-border">
-                                {recentBriefs.map(brief => (
-                                    <tr key={brief.id} className="hover:bg-gray-50/50 transition-colors">
-                                        <td className="px-6 py-4 font-medium text-breef-text-primary">{brief.projectName}</td>
-                                        <td className="px-6 py-4 text-breef-text-secondary">{getClientNameById(brief.clientId || '')}</td>
-                                        <td className="px-6 py-4 text-breef-text-secondary">{new Date(brief.createdAt).toLocaleDateString()}</td>
-                                        <td className="px-6 py-4">
-                                            <a href={`#/dashboard/brief/${brief.id}`} className="font-semibold text-amo-orange hover:underline">View</a>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+            {loading ? (
+                <>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                        <KPICardSkeleton />
+                        <KPICardSkeleton />
+                        <KPICardSkeleton />
                     </div>
-                </div>
-            </div>
+                    <div className="mb-12">
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="h-8 bg-gray-200 rounded w-48 animate-pulse"></div>
+                            <div className="h-5 bg-gray-200 rounded w-16 animate-pulse"></div>
+                        </div>
+                        <RecentBriefsSkeleton />
+                    </div>
+                    <div>
+                        <div className="h-8 bg-gray-200 rounded w-40 mb-4 animate-pulse"></div>
+                        <TopClientsSkeleton />
+                    </div>
+                </>
+            ) : (
+                <>
+                    {/* KPI Cards */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                        <KPICard title="Revenue This Month" value={kpiData.revenueThisMonth} icon={<CurrencyDollarIcon className="w-6 h-6"/>} />
+                        <KPICard title="Total Clients" value={kpiData.totalClients} icon={<UsersIcon className="w-6 h-6"/>} />
+                        <KPICard title="Avg. Project Duration" value={kpiData.avgProjectDuration} icon={<ClockIcon className="w-6 h-6"/>} />
+                    </div>
 
-            {/* Top Clients */}
-            <div>
-                <h2 className="text-2xl font-bold text-breef-text-primary mb-4">Top Clients</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {topClients.map(client => (
-                        <a href={`#/dashboard/agency/clients/${client.id}`} key={client.id} className="block bg-white p-6 rounded-2xl border border-breef-border shadow-sm hover:shadow-lg hover:border-amo-orange/50 transition-all duration-300 group">
-                            <div className="flex items-center gap-4">
-                                <div className={`w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-white font-bold text-lg ${client.avatarColor}`}>
-                                    {client.name.charAt(0)}
-                                </div>
-                                <div>
-                                    <h3 className="font-bold text-breef-text-primary group-hover:text-amo-orange">{client.name}</h3>
-                                    <p className="text-sm text-breef-text-secondary">{client.briefCount} Briefs</p>
-                                </div>
+                    {/* Recent Briefs */}
+                    <div className="mb-12">
+                        <div className="flex justify-between items-center mb-4">
+                            <h2 className="text-2xl font-bold text-breef-text-primary">Recent Briefs</h2>
+                            <a href="#/dashboard/agency/briefs" className="text-sm font-semibold text-amo-orange hover:underline">View All</a>
+                        </div>
+                        <div className="bg-white rounded-2xl border border-breef-border shadow-sm overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-sm">
+                                    <thead className="bg-gray-50">
+                                        <tr>
+                                            <th className="px-6 py-3 text-left font-semibold text-breef-text-secondary">Brief Name</th>
+                                            <th className="px-6 py-3 text-left font-semibold text-breef-text-secondary">Client</th>
+                                            <th className="px-6 py-3 text-left font-semibold text-breef-text-secondary">Date</th>
+                                            <th className="px-6 py-3 text-left font-semibold text-breef-text-secondary">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-breef-border">
+                                        {recentBriefs.map(brief => (
+                                            <tr key={brief.id} className="hover:bg-gray-50/50 transition-colors">
+                                                <td className="px-6 py-4 font-medium text-breef-text-primary">{brief.projectName}</td>
+                                                <td className="px-6 py-4 text-breef-text-secondary">{getClientNameById(brief.clientId || '')}</td>
+                                                <td className="px-6 py-4 text-breef-text-secondary">{new Date(brief.createdAt).toLocaleDateString()}</td>
+                                                <td className="px-6 py-4">
+                                                    <a href={`#/dashboard/agency/brief/${brief.id}`} className="font-semibold text-amo-orange hover:underline">View</a>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
                             </div>
-                            <div className="mt-4 pt-4 border-t border-breef-border flex justify-between items-center text-sm text-breef-text-secondary">
-                                <span>Last activity: {client.lastActivity}</span>
-                                <ArrowRightIcon className="w-5 h-5 group-hover:text-amo-orange transition-colors" />
-                            </div>
-                        </a>
-                    ))}
-                </div>
-            </div>
+                        </div>
+                    </div>
+
+                    {/* Top Clients */}
+                    <div>
+                        <h2 className="text-2xl font-bold text-breef-text-primary mb-4">Top Clients</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {topClients.map(client => (
+                                <a href={`#/dashboard/agency/clients/${client.id}`} key={client.id} className="block bg-white p-6 rounded-2xl border border-breef-border shadow-sm hover:shadow-lg hover:border-amo-orange/50 transition-all duration-300 group">
+                                    <div className="flex items-center gap-4">
+                                        <div className={`w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-white font-bold text-lg ${client.avatarColor}`}>
+                                            {client.name.charAt(0)}
+                                        </div>
+                                        <div>
+                                            <h3 className="font-bold text-breef-text-primary group-hover:text-amo-orange">{client.name}</h3>
+                                            <p className="text-sm text-breef-text-secondary">{client.briefCount} Briefs</p>
+                                        </div>
+                                    </div>
+                                    <div className="mt-4 pt-4 border-t border-breef-border flex justify-between items-center text-sm text-breef-text-secondary">
+                                        <span>Last activity: {client.lastActivity}</span>
+                                        <ArrowRightIcon className="w-5 h-5 group-hover:text-amo-orange transition-colors" />
+                                    </div>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 };
