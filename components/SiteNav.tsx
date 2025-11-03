@@ -13,7 +13,6 @@ const NavLink: React.FC<{ href: string; children: React.ReactNode; isActive: boo
 const SiteNav: React.FC<{ currentPath: string }> = ({ currentPath }) => {
     const isActive = (path: string) => {
         if (path === '/') return currentPath === '/';
-        // Match parent routes like /services for /services/ai-web-dev
         if (path.length > 1) {
             return currentPath.startsWith(path);
         }

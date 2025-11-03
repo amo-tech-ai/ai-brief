@@ -20,8 +20,6 @@ const ClientDetailPage: React.FC<ClientDetailPageProps> = ({ clientId }) => {
         if (foundClient) {
             setClient(foundClient);
             const allBriefs = getBriefs();
-            // In a real app, briefs would have a `clientId` saved with them.
-            // We are using a mock association in getBriefs() for this demo.
             const briefsForClient = allBriefs.filter(b => b.clientId === clientId);
             setClientBriefs(briefsForClient);
         }
@@ -38,7 +36,6 @@ const ClientDetailPage: React.FC<ClientDetailPageProps> = ({ clientId }) => {
     }, [clientBriefs, searchTerm]);
     
     if (loading) {
-        // A simple loader, could be replaced with a skeleton component
         return <div>Loading client details...</div>;
     }
 
@@ -50,23 +47,6 @@ const ClientDetailPage: React.FC<ClientDetailPageProps> = ({ clientId }) => {
             </div>
         );
     }
-
-    const EmptyBriefsState: React.FC = () => (
-        <div className="text-center py-20 bg-white rounded-lg border border-breef-border mt-8">
-            <div className="bg-breef-accent/10 text-breef-accent text-2xl font-bold w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-4">
-                <DocumentTextIcon className="w-8 h-8"/>
-            </div>
-            <h2 className="text-2xl font-bold text-breef-text-primary">
-                No briefs for this client yet
-            </h2>
-            <p className="mt-2 text-breef-text-secondary">
-                Create the first brief for {client.name} to get started.
-            </p>
-            <a href="#/new-brief" className="mt-6 inline-block px-6 py-3 bg-breef-accent text-white rounded-md font-semibold hover:bg-opacity-90 transition-colors">
-                + Create Brief
-            </a>
-        </div>
-    );
 
     return (
         <div>
@@ -80,7 +60,6 @@ const ClientDetailPage: React.FC<ClientDetailPageProps> = ({ clientId }) => {
                 </a>
             </header>
 
-            {/* Client Info Card */}
             <div className="bg-white p-6 rounded-2xl border border-breef-border shadow-sm mb-8">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
@@ -92,13 +71,9 @@ const ClientDetailPage: React.FC<ClientDetailPageProps> = ({ clientId }) => {
                             <p className="text-sm text-breef-text-secondary mt-1">{client.briefCount} Briefs • Last activity: {client.lastActivity}</p>
                         </div>
                     </div>
-                    <button className="text-gray-400 hover:text-gray-600 p-2">
-                         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
-                    </button>
                 </div>
             </div>
 
-            {/* Search Bar */}
             <div className="mb-8">
                 <div className="relative">
                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
@@ -109,17 +84,21 @@ const ClientDetailPage: React.FC<ClientDetailPageProps> = ({ clientId }) => {
                         placeholder={`Search briefs for ${client.name}...`}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="block w-full rounded-xl border-breef-border py-3 pl-11 pr-4 text-breef-text-primary shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-amo-orange sm:text-sm"
+                        className="block w-full rounded-xl border-breef-border py-3 pl-11 pr-4 text-breef-text-primary shadow-sm"
                     />
                 </div>
             </div>
 
             {filteredBriefs.length === 0 ? (
-                <EmptyBriefsState />
+                 <div className="text-center py-20 bg-white rounded-lg border border-breef-border mt-8">
+                    <DocumentTextIcon className="w-12 h-12 mx-auto text-gray-400"/>
+                    <h2 className="mt-4 text-2xl font-bold">No briefs yet</h2>
+                    <p className="mt-2 text-breef-text-secondary">Create the first brief for {client.name}.</p>
+                </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                     {filteredBriefs.map(brief => (
-                        <BriefCard key={brief.id} brief={brief} />
+                        <BriefCard key={brief.id} brief={brief} role="agency" />
                     ))}
                 </div>
             )}
