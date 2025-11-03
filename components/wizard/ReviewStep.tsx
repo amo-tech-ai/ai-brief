@@ -58,6 +58,29 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ onNext, onBack, data }) => {
         <ReviewItem label="Website" value={data.websiteUrl} />
         <ReviewItem label="Email" value={data.email} />
         <ReviewItem label="Phone" value={data.phone} />
+        
+        {data.companyIntelligence && (
+          <>
+            <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4 mt-4 pt-4">Company Intelligence</h3>
+            <ReviewItem label="Industry" value={data.companyIntelligence.industry} />
+            {data.companyIntelligence.competitors.length > 0 && (
+              <div>
+                <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Competitors</h4>
+                <ul className="mt-1 text-gray-800 list-disc list-inside">
+                  {data.companyIntelligence.competitors.slice(0, 5).map((comp, idx) => (
+                    <li key={idx}>{comp.name}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {Object.keys(data.companyIntelligence.socialLinks).length > 0 && (
+              <div>
+                <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Social Media</h4>
+                <p className="text-gray-800 mt-1">{Object.keys(data.companyIntelligence.socialLinks).join(', ')}</p>
+              </div>
+            )}
+          </>
+        )}
 
         <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 my-4 pt-4">Project Details</h3>
         <ReviewItem label="Project Name" value={data.projectName} />
