@@ -200,3 +200,9 @@ export const WrenchScrewdriverIcon: React.FC<{ className?: string }> = ({ classN
         <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-10.5a2.25 2.25 0 01-2.25-2.25V6.75a2.25 2.25 0 012.25-2.25h10.5a2.25 2.25 0 012.25 2.25z" />
     </SVGIcon>
 );
+
+export const ArrowUpRightIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
+  <SVGIcon className={className}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+  </SVGIcon>
+);
