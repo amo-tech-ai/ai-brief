@@ -33,6 +33,7 @@ export const saveBrief = (briefData: Partial<BriefData>): Brief => {
     projectManager: briefData.projectManager || '',
     teamMembers: briefData.teamMembers || '',
     milestones: briefData.milestones || '',
+    clientId: briefData.clientId,
     id: `brief_${Date.now()}`,
     createdAt: new Date().toISOString(),
     status: 'Generated',

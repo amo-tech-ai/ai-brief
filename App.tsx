@@ -18,14 +18,21 @@ import WhatsappPage from './pages/WhatsappPage';
 import AIAgentsPage from './pages/AIAgentsPage';
 import AIAgentDetailPage from './pages/AIAgentDetailPage';
 import HowItWorksPage from './pages/HowItWorksPage';
-import { MenuIcon, XIcon } from './components/icons';
+import AgencyDashboardPage from './pages/AgencyDashboardPage';
+import ClientListPage from './pages/ClientListPage';
+import ClientDetailPage from './pages/ClientDetailPage';
+
+import { MenuIcon } from './components/icons';
 
 // Define routes with regex for dynamic path matching
 const routes = [
+  { path: /^\/dashboard\/agency\/clients\/(.+)$/, component: (params: string[]) => <ClientDetailPage clientId={params[0]} /> },
+  { path: /^\/dashboard\/agency\/clients$/, component: () => <ClientListPage /> },
+  { path: /^\/dashboard\/agency$/, component: () => <AgencyDashboardPage /> },
   { path: /^\/dashboard\/brief\/(.+)\/edit$/, component: (params: string[]) => <EditBriefPage briefId={params[0]} /> },
   { path: /^\/dashboard\/brief\/(.+)$/, component: (params: string[]) => <BriefDetailPage briefId={params[0]} /> },
   { path: /^\/dashboard$/, component: () => <DashboardPage /> },
-  { path: /^\/brief-generator$/, component: () => <BriefWizard /> },
+  { path: /^\/new-brief$/, component: () => <BriefWizard /> },
   { path: /^\/services\/social-media$/, component: () => <SocialMediaPage /> },
   { path: /^\/services\/whatsapp$/, component: () => <WhatsappPage /> },
   { path: /^\/services\/ai-agents\/(.+)$/, component: (params: string[]) => <AIAgentDetailPage agentType={params[0]} /> },
@@ -71,13 +78,13 @@ const App: React.FC = () => {
     return <HomePage />;
   };
   
-  const isAppRoute = /^\/(dashboard|brief-generator)/.test(path);
+  const isAppRoute = /^\/(dashboard|new-brief)/.test(path);
 
   const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
     <div className="flex h-screen bg-breef-bg">
       <Sidebar currentPath={path} isOpen={isSidebarOpen} setOpen={setSidebarOpen} />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="lg:hidden bg-white/80 backdrop-blur-md border-b border-breef-border p-4 flex items-center h-16">
+      <div className="flex-1 flex flex-col overflow-hidden lg:pl-72">
+        <header className="lg:hidden bg-white/80 backdrop-blur-md border-b border-breef-border p-4 flex items-center h-16 shrink-0">
           <button onClick={() => setSidebarOpen(true)} className="text-gray-500">
             <MenuIcon className="h-6 w-6" />
           </button>

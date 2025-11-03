@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChartBarIcon, DocumentDuplicateIcon } from './icons';
+import { ChartBarIcon, DocumentDuplicateIcon, UsersIcon } from './icons';
 
 const NavLink: React.FC<{ href: string; children: React.ReactNode; isActive: boolean; icon: React.ReactNode; }> = ({ href, children, isActive, icon }) => {
     const activeClasses = 'bg-orange-50 text-amo-orange';
@@ -34,30 +34,39 @@ const SidebarContent: React.FC<{ currentPath: string }> = ({ currentPath }) => (
                     <ul role="list" className="-mx-2 space-y-1">
                         <li>
                             <NavLink 
-                                href="#/dashboard" 
-                                isActive={currentPath.startsWith('/dashboard')}
+                                href="#/dashboard/agency" 
+                                isActive={currentPath === '/dashboard/agency'}
                                 icon={<ChartBarIcon />}
                             >
                                 Dashboard
                             </NavLink>
                         </li>
+                         <li>
+                            <NavLink 
+                                href="#/dashboard/agency/clients" 
+                                isActive={currentPath.startsWith('/dashboard/agency/clients')}
+                                icon={<UsersIcon />}
+                            >
+                                Clients
+                            </NavLink>
+                        </li>
                         <li>
                              <NavLink 
-                                href="#/brief-generator" 
-                                isActive={currentPath.startsWith('/brief-generator')}
+                                href="#/dashboard" 
+                                isActive={currentPath === '/dashboard'}
                                 icon={<DocumentDuplicateIcon />}
                             >
-                                New Brief
+                                All Briefs
                             </NavLink>
                         </li>
                     </ul>
                 </li>
-                <li className="mt-auto">
-                    <a href="#" className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-breef-text-primary">
-                        <div className="h-6 w-6 shrink-0 rounded-full bg-gray-200 flex items-center justify-center text-xs font-semibold text-gray-600 border border-gray-300">A</div>
-                        <span className="sr-only">Your profile</span>
-                        <span aria-hidden="true">Account</span>
-                    </a>
+                 <li className="mt-auto">
+                    <div className="border-t border-breef-border -mx-6 pt-4">
+                         <a href="#/new-brief" className="group mx-6 flex items-center justify-center px-3 py-2.5 text-sm font-semibold rounded-lg transition-colors bg-amo-orange text-white hover:bg-opacity-90">
+                            + New Brief
+                        </a>
+                    </div>
                 </li>
             </ul>
         </nav>
@@ -69,8 +78,8 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPath, isOpen, setOpen }) => {
     return (
         <>
             {/* Mobile sidebar */}
-            <div className={`relative z-40 lg:hidden ${isOpen ? 'block' : 'hidden'}`} role="dialog" aria-modal="true">
-                <div className="fixed inset-0 bg-gray-900/80" onClick={() => setOpen(false)}></div>
+            <div className={`relative z-50 lg:hidden ${isOpen ? 'block' : 'hidden'}`} role="dialog" aria-modal="true">
+                <div className="fixed inset-0 bg-gray-900/80 transition-opacity" onClick={() => setOpen(false)}></div>
                 <div className="fixed inset-0 flex">
                     <div className="relative mr-16 flex w-full max-w-xs flex-1">
                         <div className="absolute left-full top-0 flex w-16 justify-center pt-5">
@@ -90,9 +99,6 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPath, isOpen, setOpen }) => {
             <div className="hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-72 lg:flex-col">
                 <SidebarContent currentPath={currentPath} />
             </div>
-
-            {/* This is a spacer for the main content */}
-             <div className="hidden lg:block lg:pl-72"></div>
         </>
     );
 };

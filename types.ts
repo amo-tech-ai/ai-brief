@@ -13,6 +13,8 @@ export interface BriefData {
   projectManager?: string;
   teamMembers?: string;
   milestones?: string;
+  // fix: Add optional clientId to associate briefs with clients.
+  clientId?: string;
 }
 
 export interface Brief extends BriefData {
