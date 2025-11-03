@@ -22,13 +22,20 @@ export const generateProjectBrief = async (formData: Partial<BriefData>): Promis
       - Estimated Budget: ${formData.budget}
       - Estimated Timeline: ${formData.timeline}
 
+      Project Management:
+      - Project Manager: ${formData.projectManager || 'Not specified'}
+      - Team Members: ${formData.teamMembers || 'Not specified'}
+      - Key Milestones:
+${formData.milestones || 'Not specified'}
+
       Generate a brief with the following sections:
       1.  **Project Overview:** A concise summary of the project, its purpose, and the problem it solves.
       2.  **Key Objectives:** 2-3 specific, measurable goals for the project.
       3.  **Target Audience:** A brief description of the ideal user.
       4.  **Core Features & Deliverables:** A bulleted list of the main features and expected outcomes based on the selected categories.
-      5.  **Suggested Tech Stack:** Recommend a modern technology stack suitable for this type of AI project.
-      6.  **Next Steps:** Briefly outline the immediate next steps (e.g., detailed wireframing, prototype development).
+      5.  **Project Management & Timeline:** A section outlining the manager, team, key milestones, and timeline.
+      6.  **Suggested Tech Stack:** Recommend a modern technology stack suitable for this type of AI project.
+      7.  **Next Steps:** Briefly outline the immediate next steps (e.g., detailed wireframing, prototype development).
 
       The tone should be professional, confident, and inspiring. Format the output in clean markdown.
     `;

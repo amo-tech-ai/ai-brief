@@ -10,9 +10,12 @@ export interface BriefData {
   websiteUrl?: string;
   email?: string;
   phone?: string;
+  projectManager?: string;
+  teamMembers?: string;
+  milestones?: string;
 }
 
-export type WizardStepId = 'welcome' | 'contact' | 'scope' | 'category' | 'budget' | 'review' | 'finalize';
+export type WizardStepId = 'welcome' | 'contact' | 'scope' | 'category' | 'budget' | 'management' | 'review' | 'finalize';
 
 export interface WizardStepInfo {
   id: WizardStepId;

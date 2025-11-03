@@ -17,7 +17,7 @@ const ReviewItem: React.FC<{ label: string, value: string | string[] | undefined
     return (
         <div>
             <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">{label}</h4>
-            <p className="text-gray-800 mt-1">{displayValue}</p>
+            <p className="text-gray-800 mt-1 whitespace-pre-wrap">{displayValue}</p>
         </div>
     );
 }
@@ -66,6 +66,11 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ onNext, onBack, data }) => {
         <ReviewItem label="Categories" value={data.categories} />
         <ReviewItem label="Budget" value={data.budget} />
         <ReviewItem label="Timeline" value={data.timeline} />
+
+        <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 my-4 pt-4">Project Management</h3>
+        <ReviewItem label="Project Manager" value={data.projectManager} />
+        <ReviewItem label="Team Members" value={data.teamMembers} />
+        <ReviewItem label="Key Milestones" value={data.milestones} />
       </div>
 
       {error && <p className="text-red-600 text-sm text-center bg-red-50 p-3 rounded-md">{error}</p>}

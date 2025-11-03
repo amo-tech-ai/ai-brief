@@ -15,7 +15,11 @@ const InputField: React.FC<React.InputHTMLAttributes<HTMLInputElement> & { label
         <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
         <input 
             id={id} 
-            className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm p-3 ${error ? 'border-red-500' : ''}`} 
+            className={`block w-full rounded-md shadow transition-all duration-200 p-3 sm:text-sm focus:ring-2 focus:shadow-md ${
+                error 
+                ? 'border-red-500 text-red-900 placeholder-red-400 focus:border-red-500 focus:ring-red-500' 
+                : 'border-gray-300 focus:border-orange-500 focus:ring-orange-500'
+            }`}
             {...props} 
         />
         {error && <p className="mt-1 text-sm text-red-600">{error}</p>}

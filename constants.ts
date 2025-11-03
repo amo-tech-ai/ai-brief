@@ -5,6 +5,7 @@ export const WIZARD_STEPS: WizardStepInfo[] = [
   { id: 'scope', name: 'Scope' },
   { id: 'category', name: 'Category' },
   { id: 'budget', name: 'Budget' },
+  { id: 'management', name: 'Management' },
   { id: 'review', name: 'Review' },
 ];
 
