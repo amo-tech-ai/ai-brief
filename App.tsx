@@ -12,6 +12,8 @@ import ProjectsPage from './pages/ProjectsPage';
 import ProcessPage from './pages/ProcessPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
+import SocialMediaPage from './pages/SocialMediaPage';
+import WhatsappPage from './pages/WhatsappPage';
 
 const App: React.FC = () => {
   const [route, setRoute] = useState(window.location.hash || '#/');
@@ -48,6 +50,14 @@ const App: React.FC = () => {
         return <BriefWizard />;
     }
     
+    if (path === '/services/social-media') {
+        return <SocialMediaPage />;
+    }
+
+    if (path === '/services/whatsapp') {
+        return <WhatsappPage />;
+    }
+
     if (path.startsWith('/services/')) {
         const serviceId = path.split('/')[2];
         return <ServiceDetailPage serviceId={serviceId} />;

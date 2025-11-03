@@ -91,12 +91,12 @@ const ServicesPage: React.FC = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid gap-10 md:grid-cols-2">
                         {services.map(s => (
-                             <a key={s.title} href={s.href} className="block bg-white p-8 rounded-xl shadow-sm border border-breef-border transition-all duration-200 ease-out group hover:shadow-lg hover:-translate-y-1 hover:scale-[1.02] hover:border-amo-orange">
-                                <div className="mb-5 transition-transform duration-200 ease-out group-hover:scale-105">{s.icon}</div>
+                             <a key={s.title} href={s.href} className="block bg-white p-8 rounded-xl shadow-sm border border-breef-border transition-all duration-300 ease-in-out group hover:shadow-xl hover:-translate-y-1.5 hover:scale-[1.03] hover:border-amo-orange/30 hover:bg-orange-50/20 hover:ring-4 hover:ring-amo-orange/5">
+                                <div className="mb-5 transition-transform duration-300 ease-in-out group-hover:scale-110">{s.icon}</div>
                                 <h3 className="text-2xl font-bold text-breef-text-primary">{s.title}</h3>
                                 <p className="mt-3 text-breef-text-secondary">{s.desc}</p>
                                 <p className="mt-5 font-semibold text-amo-orange flex items-center">
-                                    Learn More <ArrowRightIcon className="ml-2 w-4 h-4 transition-all duration-250 ease-out opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-1"/>
+                                    Learn More <ArrowRightIcon className="ml-2 w-4 h-4 transition-all duration-300 ease-in-out opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"/>
                                 </p>
                             </a>
                         ))}
