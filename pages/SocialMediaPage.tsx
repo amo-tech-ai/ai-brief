@@ -174,6 +174,70 @@ const ProcessSection = () => {
     );
 };
 
+const DashboardMockSVG = () => (
+    <svg viewBox="0 0 100 80" className="w-24 h-20 mx-auto text-gray-300">
+      <rect x="5" y="5" width="90" height="70" rx="5" stroke="currentColor" strokeWidth="1" fill="#fff" />
+      <rect x="15" y="50" width="10" height="20" fill="#F97316" className="bar1" />
+      <rect x="30" y="40" width="10" height="30" fill="#F97316" className="bar2" />
+      <rect x="45" y="55" width="10" height="15" fill="#F97316" className="bar3" />
+      <polyline points="60,60 70,45 80,50 90,30" stroke="#34D399" strokeWidth="2" fill="none" className="line-chart" />
+      <style>{`
+        @keyframes rise {
+          from { transform: scaleY(0.1); transform-origin: bottom; }
+          to { transform: scaleY(1); transform-origin: bottom; }
+        }
+        .bar1 { animation: rise 1.5s ease-in-out infinite alternate; animation-delay: 0s; }
+        .bar2 { animation: rise 1.5s ease-in-out infinite alternate; animation-delay: 0.3s; }
+        .bar3 { animation: rise 1.5s ease-in-out infinite alternate; animation-delay: 0.6s; }
+        @keyframes draw {
+          from { stroke-dashoffset: 100; }
+          to { stroke-dashoffset: 0; }
+        }
+        .line-chart {
+          stroke-dasharray: 100;
+          animation: draw 2s ease-in-out infinite alternate;
+        }
+      `}</style>
+    </svg>
+);
+
+const PlatformFlowchartSVG = () => (
+    <svg viewBox="0 0 100 80" className="w-24 h-20 mx-auto text-gray-300">
+      <circle cx="50" cy="40" r="10" fill="#F97316" />
+      <circle cx="50" cy="40" r="14" fill="#F97316" opacity="0.3" className="animate-pulse" />
+      <circle cx="15" cy="20" r="5" stroke="currentColor" fill="#fff" strokeWidth="1" />
+      <circle cx="85" cy="20" r="5" stroke="currentColor" fill="#fff" strokeWidth="1" />
+      <circle cx="15" cy="60" r="5" stroke="currentColor" fill="#fff" strokeWidth="1" />
+      <circle cx="85" cy="60" r="5" stroke="currentColor" fill="#fff" strokeWidth="1" />
+      <path d="M42,35 L20,23" stroke="currentColor" strokeWidth="1" />
+      <path d="M58,35 L80,23" stroke="currentColor" strokeWidth="1" />
+      <path d="M42,45 L20,57" stroke="currentColor" strokeWidth="1" />
+      <path d="M58,45 L80,57" stroke="currentColor" strokeWidth="1" />
+      <circle r="2" fill="#34D399">
+        <animateMotion path="M42,35 L20,23" dur="3s" repeatCount="indefinite" />
+      </circle>
+      <circle r="2" fill="#34D399">
+        <animateMotion path="M58,45 L80,57" dur="3s" repeatCount="indefinite" begin="1.5s" />
+      </circle>
+    </svg>
+);
+
+const ContinuousLearningLoopSVG = () => (
+    <svg viewBox="0 0 100 80" className="w-24 h-20 mx-auto text-gray-400">
+      <path id="loop-path" d="M 50, 15 A 30 20 0 1 1 50, 65 A 30 20 0 1 1 50, 15" stroke="currentColor" strokeWidth="1" fill="none" strokeDasharray="3 3"/>
+      <circle r="4" fill="#F97316" className="orbiter">
+        <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+          <mpath href="#loop-path"/>
+        </animateMotion>
+      </circle>
+       <circle r="6" fill="#F97316" opacity="0.3" className="orbiter-glow">
+        <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+          <mpath href="#loop-path"/>
+        </animateMotion>
+      </circle>
+    </svg>
+);
+
 const VisualFlowsSection = () => (
     <section className="py-20 lg:py-28 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -183,17 +247,17 @@ const VisualFlowsSection = () => (
             </div>
             <div className="mt-16 grid lg:grid-cols-3 gap-8 text-center">
                 <div className="bg-white p-8 rounded-xl shadow-sm border border-breef-border">
-                    <ChartBarIcon className="w-10 h-10 text-amo-orange mx-auto"/>
+                    <DashboardMockSVG />
                     <h3 className="mt-4 text-xl font-bold">Dashboard Mock</h3>
                     <p className="mt-2 text-breef-text-secondary">Analytics chart tiles with auto-updating graphs to represent the system’s intelligence.</p>
                 </div>
                  <div className="bg-white p-8 rounded-xl shadow-sm border border-breef-border">
-                    <GlobeAltIcon className="w-10 h-10 text-amo-orange mx-auto"/>
+                    <PlatformFlowchartSVG />
                     <h3 className="mt-4 text-xl font-bold">Platform Flowchart</h3>
                     <p className="mt-2 text-breef-text-secondary">A branching diagram showing content variants for multiple platforms.</p>
                 </div>
                  <div className="bg-white p-8 rounded-xl shadow-sm border border-breef-border">
-                    <CogIcon className="w-10 h-10 text-amo-orange mx-auto"/>
+                    <ContinuousLearningLoopSVG />
                     <h3 className="mt-4 text-xl font-bold">Continuous Learning Loop</h3>
                     <p className="mt-2 text-breef-text-secondary">A circular diagram showing the AI workflow: Create → Test → Learn → Refine.</p>
                 </div>
