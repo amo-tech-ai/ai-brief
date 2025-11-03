@@ -21,12 +21,12 @@ const SiteFooter: React.FC = () => {
             <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
                 <div className="xl:grid xl:grid-cols-3 xl:gap-8">
                     <div className="space-y-8 xl:col-span-1">
-                        <div className="flex items-center space-x-2">
+                        <a href="#/" className="flex items-center space-x-2">
                              <div className="bg-breef-text-primary text-white w-10 h-10 flex items-center justify-center rounded-lg font-bold text-xl">
                                 A
                             </div>
                             <span className="font-bold text-breef-text-primary text-2xl">AMO AI</span>
-                        </div>
+                        </a>
                         <p className="text-gray-500 text-base">
                             Turn ideas into AI-powered applications. Smarter automation, measurable growth, real results.
                         </p>
@@ -45,18 +45,18 @@ const SiteFooter: React.FC = () => {
                         <div className="md:grid md:grid-cols-2 md:gap-8">
                             <div>
                                 <LinkColumn title="Solutions" links={[
-                                    { href: "#", text: "AI Web Dev" },
-                                    { href: "#", text: "AI App Dev" },
-                                    { href: "#", text: "Social Media AI" },
-                                    { href: "#", text: "WhatsApp AI" },
+                                    { href: "#/services/ai-web-dev", text: "AI Web Dev" },
+                                    { href: "#/services/ai-app-dev", text: "AI App Dev" },
+                                    { href: "#/services/social-media", text: "Social Media AI" },
+                                    { href: "#/services/whatsapp", text: "WhatsApp AI" },
                                 ]} />
                             </div>
                             <div className="mt-12 md:mt-0">
                                 <LinkColumn title="Company" links={[
-                                    { href: "#", text: "About" },
-                                    { href: "#", text: "Process" },
-                                    { href: "#", text: "Projects" },
-                                    { href: "#", text: "Contact" },
+                                    { href: "#/about", text: "About" },
+                                    { href: "#/process", text: "Process" },
+                                    { href: "#/projects", text: "Projects" },
+                                    { href: "#/contact", text: "Contact" },
                                 ]} />
                             </div>
                         </div>
