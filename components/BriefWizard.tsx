@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { BriefData, WizardStepId } from '../types';
 import WelcomeStep from './wizard/WelcomeStep';
+import ContactStep from './wizard/ContactStep';
 import ScopeStep from './wizard/ScopeStep';
 import CategoryStep from './wizard/CategoryStep';
 import BudgetStep from './wizard/BudgetStep';
@@ -15,6 +16,9 @@ const BriefWizard: React.FC = () => {
     setBriefData(prev => ({ ...prev, ...data }));
     switch (step) {
       case 'welcome':
+        setStep('contact');
+        break;
+      case 'contact':
         setStep('scope');
         break;
       case 'scope':
@@ -34,8 +38,11 @@ const BriefWizard: React.FC = () => {
 
   const handleBack = useCallback(() => {
     switch (step) {
-      case 'scope':
+      case 'contact':
         setStep('welcome');
+        break;
+      case 'scope':
+        setStep('contact');
         break;
       case 'category':
         setStep('scope');
@@ -58,6 +65,8 @@ const BriefWizard: React.FC = () => {
     switch (step) {
       case 'welcome':
         return <WelcomeStep onNext={handleNext} />;
+      case 'contact':
+        return <ContactStep onNext={handleNext} onBack={handleBack} data={briefData} />;
       case 'scope':
         return <ScopeStep onNext={handleNext} onBack={handleBack} data={briefData} />;
       case 'category':

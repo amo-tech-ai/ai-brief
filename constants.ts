@@ -1,6 +1,7 @@
 import { WizardStepInfo } from './types';
 
 export const WIZARD_STEPS: WizardStepInfo[] = [
+  { id: 'contact', name: 'Contact' },
   { id: 'scope', name: 'Scope' },
   { id: 'category', name: 'Category' },
   { id: 'budget', name: 'Budget' },

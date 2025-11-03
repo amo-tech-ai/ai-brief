@@ -53,6 +53,13 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ onNext, onBack, data }) => {
       </div>
       
       <div className="space-y-6 bg-gray-50 p-6 rounded-lg border border-gray-200">
+        <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Contact Information</h3>
+        <ReviewItem label="Company / Brand" value={data.companyName} />
+        <ReviewItem label="Website" value={data.websiteUrl} />
+        <ReviewItem label="Email" value={data.email} />
+        <ReviewItem label="Phone" value={data.phone} />
+
+        <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 my-4 pt-4">Project Details</h3>
         <ReviewItem label="Project Name" value={data.projectName} />
         <ReviewItem label="Core Goal" value={data.projectGoal} />
         <ReviewItem label="Target Audience" value={data.projectAudience} />

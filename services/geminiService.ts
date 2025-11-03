@@ -8,6 +8,12 @@ export const generateProjectBrief = async (formData: Partial<BriefData>): Promis
     const prompt = `
       Act as a senior project manager and strategist. Based on the following project details, generate a comprehensive and professional project brief. The brief should be well-structured, clear, and ready to be presented to a development team or stakeholders.
 
+      Client Details:
+      - Company / Brand: ${formData.companyName}
+      - Website: ${formData.websiteUrl}
+      - Contact Email: ${formData.email}
+      ${formData.phone ? `- Contact Phone: ${formData.phone}` : ''}
+
       Project Details:
       - Project Name: ${formData.projectName}
       - Core Goal: ${formData.projectGoal}
