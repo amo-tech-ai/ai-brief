@@ -5,7 +5,21 @@ const BRIEFS_STORAGE_KEY = 'ai_briefs';
 export const getBriefs = (): Brief[] => {
   try {
     const briefsJson = localStorage.getItem(BRIEFS_STORAGE_KEY);
-    return briefsJson ? JSON.parse(briefsJson) : [];
+    const briefs: Brief[] = briefsJson ? JSON.parse(briefsJson) : [];
+
+    // MOCK DATA ASSOCIATION FOR DEMO
+    // In a real app, clientId would be saved with the brief. Here we simulate it
+    // to ensure the client detail page has data to display.
+    briefs.forEach((brief, index) => {
+        if (!brief.clientId) { // Only assign if it doesn't have one
+            if (index % 4 === 0) brief.clientId = 'client_1';
+            else if (index % 4 === 1) brief.clientId = 'client_2';
+            else if (index % 4 === 2) brief.clientId = 'client_3';
+            else brief.clientId = 'client_4';
+        }
+    });
+
+    return briefs;
   } catch (error) {
     console.error("Error reading briefs from localStorage", error);
     return [];

@@ -20,8 +20,8 @@ const ClientDetailPage: React.FC<ClientDetailPageProps> = ({ clientId }) => {
         if (foundClient) {
             setClient(foundClient);
             const allBriefs = getBriefs();
-            // In a real app, briefs would have a `clientId`. We'll mock this.
-            // For this mock, we'll assign some briefs to clients based on ID.
+            // In a real app, briefs would have a `clientId` saved with them.
+            // We are using a mock association in getBriefs() for this demo.
             const briefsForClient = allBriefs.filter(b => b.clientId === clientId);
             setClientBriefs(briefsForClient);
         }
