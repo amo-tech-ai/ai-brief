@@ -14,6 +14,29 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import SocialMediaPage from './pages/SocialMediaPage';
 import WhatsappPage from './pages/WhatsappPage';
+import AIAgentsPage from './pages/AIAgentsPage';
+import AIAgentDetailPage from './pages/AIAgentDetailPage';
+import HowItWorksPage from './pages/HowItWorksPage';
+
+// Define routes with regex for dynamic path matching
+const routes = [
+  { path: /^\/dashboard\/brief\/(.+)\/edit$/, component: (params: string[]) => <EditBriefPage briefId={params[0]} /> },
+  { path: /^\/dashboard\/brief\/(.+)$/, component: (params: string[]) => <BriefDetailPage briefId={params[0]} /> },
+  { path: /^\/dashboard$/, component: () => <DashboardPage /> },
+  { path: /^\/brief-generator$/, component: () => <BriefWizard /> },
+  { path: /^\/services\/social-media$/, component: () => <SocialMediaPage /> },
+  { path: /^\/services\/whatsapp$/, component: () => <WhatsappPage /> },
+  { path: /^\/services\/ai-agents\/(.+)$/, component: (params: string[]) => <AIAgentDetailPage agentType={params[0]} /> },
+  { path: /^\/services\/ai-agents$/, component: () => <AIAgentsPage /> },
+  { path: /^\/services\/(.+)$/, component: (params: string[]) => <ServiceDetailPage serviceId={params[0]} /> },
+  { path: /^\/services$/, component: () => <ServicesPage /> },
+  { path: /^\/projects$/, component: () => <ProjectsPage /> },
+  { path: /^\/process$/, component: () => <ProcessPage /> },
+  { path: /^\/how-it-works$/, component: () => <HowItWorksPage /> },
+  { path: /^\/about$/, component: () => <AboutPage /> },
+  { path: /^\/contact$/, component: () => <ContactPage /> },
+  { path: /^\/$/, component: () => <HomePage /> },
+];
 
 const App: React.FC = () => {
   const [route, setRoute] = useState(window.location.hash || '#/');
@@ -32,66 +55,23 @@ const App: React.FC = () => {
   const path = route.replace(/^#/, '');
 
   const renderPage = () => {
-    if (path.startsWith('/dashboard/brief/') && path.endsWith('/edit')) {
-      const id = path.split('/')[3];
-      return <EditBriefPage briefId={id} />;
+    for (const routeDef of routes) {
+      const match = path.match(routeDef.path);
+      if (match) {
+        // The first element of match is the full string, subsequent are capture groups
+        const params = match.slice(1);
+        return routeDef.component(params);
+      }
     }
-    
-    if (path.startsWith('/dashboard/brief/')) {
-      const id = path.split('/').pop();
-      return <BriefDetailPage briefId={id!} />;
-    }
-    
-    if (path === '/dashboard') {
-      return <DashboardPage />;
-    }
-    
-    if (path === '/brief-generator') {
-        return <BriefWizard />;
-    }
-    
-    if (path === '/services/social-media') {
-        return <SocialMediaPage />;
-    }
-
-    if (path === '/services/whatsapp') {
-        return <WhatsappPage />;
-    }
-
-    if (path.startsWith('/services/')) {
-        const serviceId = path.split('/')[2];
-        return <ServiceDetailPage serviceId={serviceId} />;
-    }
-    
-    if (path === '/services') {
-        return <ServicesPage />;
-    }
-
-    if (path === '/projects') {
-        return <ProjectsPage />;
-    }
-
-    if (path === '/process') {
-        return <ProcessPage />;
-    }
-    
-    if (path === '/about') {
-        return <AboutPage />;
-    }
-
-    if (path === '/contact') {
-        return <ContactPage />;
-    }
-    
-    // Default to home page
+    // Fallback to home page if no specific match is found for invalid URLs
     return <HomePage />;
   };
   
-  const isAppRoute = route.includes('dashboard') || route.includes('brief-generator');
+  const isAppRoute = /^\/(dashboard|brief-generator)/.test(path);
 
   return (
     <div className={`min-h-screen w-full ${isAppRoute ? 'bg-breef-bg' : 'bg-white'}`}>
-      {isAppRoute ? <TopNav /> : null}
+      {isAppRoute ? <TopNav currentPath={path} /> : null}
       <main key={path} className={`${isAppRoute ? 'p-4 sm:p-6 md:p-8' : ''} animate-fade-in`}>
         {renderPage()}
       </main>

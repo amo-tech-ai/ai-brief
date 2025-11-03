@@ -148,7 +148,7 @@ export const LightBulbIcon: React.FC<{ className?: string }> = ({ className = "w
 
 export const ViewColumnsIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
     <SVGIcon className={className}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 4.5v15m6-15v15m-10.5-15h15a2.25 2.25 0 012.25 2.25v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75A2.25 2.25 0 013.5 4.5z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 4.5v15m6-15v15m-10.5-15h15a2.25 2.25 0 012.25 2.25v10.5a2.25 2.25 0 01-2.25-2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75A2.25 2.25 0 013.5 4.5z" />
     </SVGIcon>
 );
 
@@ -204,5 +204,11 @@ export const WrenchScrewdriverIcon: React.FC<{ className?: string }> = ({ classN
 export const ArrowUpRightIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
   <SVGIcon className={className}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+  </SVGIcon>
+);
+
+export const CpuChipIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
+  <SVGIcon className={className}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 3.75H19.5M8.25 3.75h.008v.008H8.25V3.75zm0 3H12m0 0h8.25m-8.25 0V15m0-3.75L6.75 6v1.5m.75 3.75-1.5-1.5m3-3.75-1.5 1.5m0 0 .008.008H12m0 0v.008h.008V12m0 0h-3.375m0 0h3.375m0 0V9.375m0 0h3.375M12 15v2.25m0 0h-1.5m1.5 0h1.5m-1.5 0V15m0 0h-3.375m0 0h3.375m0 0V12m0 0h3.375m0 0h-3.375m3.375 0V9.375m0 0h-3.375M15 3.75h.008v.008H15V3.75zm-3.75 0h.008v.008H11.25V3.75zm-3.75 0h.008v.008H7.5V3.75zm-3.75 0h.008v.008H3.75V3.75zM19.5 3.75h.008v.008H19.5V3.75zm-3.75 0h.008v.008H15.75V3.75zm-3.75 0h.008v.008H12V3.75zm-3.75 0h.008v.008H8.25V3.75zm-3.75 0h.008v.008H4.5V3.75zM19.5 15h.008v.008H19.5V15zm-3.75 0h.008v.008H15.75V15zm-3.75 0h.008v.008H12V15zm-3.75 0h.008v.008H8.25V15zm-3.75 0h.008v.008H4.5V15zM19.5 12h.008v.008H19.5V12zm-3.75 0h.008v.008H15.75V12zm-3.75 0h.008v.008H12V12zm-3.75 0h.008v.008H8.25V12zm-3.75 0h.008v.008H4.5V12zM19.5 9.375h.008v.008H19.5V9.375zm-3.75 0h.008v.008H15.75V9.375zm-3.75 0h.008v.008H12V9.375zm-3.75 0h.008v.008H8.25V9.375zm-3.75 0h.008v.008H4.5V9.375zM19.5 6h.008v.008H19.5V6zm-3.75 0h.008v.008H15.75V6zm-3.75 0h.008v.008H12V6zm-3.75 0h.008v.008H8.25V6zm-3.75 0h.008v.008H4.5V6zM3.75 21v-6.75A2.25 2.25 0 0 1 6 12h12a2.25 2.25 0 0 1 2.25 2.25V21" />
   </SVGIcon>
 );

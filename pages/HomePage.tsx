@@ -15,7 +15,7 @@ const HomePage: React.FC = () => {
                     </a>
                     <div className="hidden md:flex items-center space-x-8">
                         <a href="#/services" className="text-gray-600 hover:text-amo-orange font-medium">Services</a>
-                        <a href="#process" className="text-gray-600 hover:text-amo-orange font-medium">Process</a>
+                        <a href="#/how-it-works" className="text-gray-600 hover:text-amo-orange font-medium">How It Works</a>
                         <a href="#pricing" className="text-gray-600 hover:text-amo-orange font-medium">Pricing</a>
                     </div>
                     <div>

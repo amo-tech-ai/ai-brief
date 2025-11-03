@@ -47,6 +47,7 @@ const SiteFooter: React.FC = () => {
                                 <LinkColumn title="Solutions" links={[
                                     { href: "#/services/ai-web-dev", text: "AI Web Dev" },
                                     { href: "#/services/ai-app-dev", text: "AI App Dev" },
+                                    { href: "#/services/ai-agents", text: "AI Agents" },
                                     { href: "#/services/social-media", text: "Social Media AI" },
                                     { href: "#/services/whatsapp", text: "WhatsApp AI" },
                                 ]} />
@@ -54,7 +55,7 @@ const SiteFooter: React.FC = () => {
                             <div className="mt-12 md:mt-0">
                                 <LinkColumn title="Company" links={[
                                     { href: "#/about", text: "About" },
-                                    { href: "#/process", text: "Process" },
+                                    { href: "#/how-it-works", text: "How It Works" },
                                     { href: "#/projects", text: "Projects" },
                                     { href: "#/contact", text: "Contact" },
                                 ]} />

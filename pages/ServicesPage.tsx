@@ -3,6 +3,7 @@ import {
     ArrowRightIcon,
     ChatBubbleLeftRightIcon,
     CodeIcon,
+    CpuChipIcon,
     DevicePhoneMobileIcon,
     MagnifyingGlassIcon,
     MegaphoneIcon,
@@ -84,12 +85,18 @@ const ServicesPage: React.FC = () => {
                 desc: "Engage customers 24/7 through personalized AI messaging on WhatsApp and social channels.",
                 href: "#/services/whatsapp"
             },
+            { 
+                icon: <CpuChipIcon className="w-8 h-8 text-amo-orange"/>, 
+                title: "Custom AI Agents", 
+                desc: "Deploy an autonomous AI workforce for sales, support, and complex operational tasks.",
+                href: "#/services/ai-agents"
+            },
         ];
 
         return (
             <section className="py-20 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid gap-10 md:grid-cols-2">
+                    <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
                         {services.map(s => (
                              <a key={s.title} href={s.href} className="block bg-white p-8 rounded-xl shadow-sm border border-breef-border transition-all duration-300 ease-in-out group hover:shadow-xl hover:-translate-y-1.5 hover:scale-[1.03] hover:border-amo-orange/30 hover:bg-orange-50/20 hover:ring-4 hover:ring-amo-orange/5">
                                 <div className="mb-5 transition-transform duration-300 ease-in-out group-hover:scale-110">{s.icon}</div>
