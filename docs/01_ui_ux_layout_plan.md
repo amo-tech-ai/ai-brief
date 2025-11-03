@@ -369,6 +369,3 @@ Download File
 - Use existing color palette (orange primary, etc.)
 
 ---
-
-**Next Document**: Implementation begins with Phase 0 setup (`00-SETUP-PHASE-ZERO.md`)
-

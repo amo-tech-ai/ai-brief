@@ -242,4 +242,3 @@ Created: Nov 2, 2025
 - [ ] Clear visual hierarchy (project name prominent)
 - [ ] Collapsible sections have clear expand/collapse indicators
 - [ ] Company Intelligence card visually distinct (light blue/teal)
-

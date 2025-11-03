@@ -45,7 +45,7 @@ const ProjectManagementStep: React.FC<ProjectManagementStepProps> = ({ onNext, o
       </div>
       <div className="text-center">
         <h2 className="text-3xl font-bold text-gray-800">Project Management</h2>
-        <p className="text-gray-600 mt-2">Outline the team and timeline for the project. (Optional)</p>
+        <p className="text-gray-600 mt-2">Assign a project manager and outline the team and milestones. (Optional)</p>
       </div>
       <form onSubmit={handleSubmit} className="space-y-6">
         <InputField id="projectManager" name="projectManager" label="Project Manager" placeholder="e.g., Alex Johnson" value={formData.projectManager} onChange={handleChange} />

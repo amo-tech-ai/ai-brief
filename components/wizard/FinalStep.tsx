@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { BriefData } from '../../types';
+import React, { useState, useEffect } from 'react';
+import { Brief, BriefData } from '../../types';
 import Button from '../Button';
-import { CheckIcon, CopyIcon, RestartIcon } from '../icons';
+import { ArrowRightIcon, CheckIcon, RestartIcon } from '../icons';
+import { saveBrief } from '../../utils/briefs';
 
 interface FinalStepProps {
   briefData: Partial<BriefData>;
@@ -9,51 +10,52 @@ interface FinalStepProps {
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({ briefData, onStartOver }) => {
-  const [copied, setCopied] = useState(false);
+  const [savedBrief, setSavedBrief] = useState<Brief | null>(null);
 
-  const handleCopy = () => {
-    if (briefData.generatedBrief) {
-      navigator.clipboard.writeText(briefData.generatedBrief).then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2500);
-      });
+  useEffect(() => {
+    // Automatically save the brief when this step is reached.
+    if (briefData.projectName && briefData.generatedBrief) {
+        const newBrief = saveBrief(briefData);
+        setSavedBrief(newBrief);
     }
-  };
+  }, [briefData]);
+
+  const renderMarkdownPreview = (text: string) => {
+    let html = text
+        .replace(/^#+ (.*$)/gim, '<strong>$1</strong>')
+        .replace(/\*\*(.*)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br />');
+    return { __html: html };
+  }
 
   return (
-    <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 space-y-6">
+    <div className="bg-white p-8 rounded-2xl shadow-lg border border-breef-border space-y-6">
       <div className="text-center space-y-3 flex flex-col items-center">
         <div className="bg-green-100 rounded-full p-3">
           <CheckIcon className="w-8 h-8 text-green-600" />
         </div>
         <h2 className="text-3xl font-bold text-gray-800">Your AI Brief is Ready!</h2>
         <p className="text-gray-600 max-w-xl">
-          Here is your professionally structured project brief. You can copy it, share it with your team, or use it for your development planning.
+          We've saved your new brief to your dashboard. You can view it, share it, or start another.
         </p>
       </div>
 
-      <div className="w-full bg-gray-50 rounded-lg p-6 border border-gray-200 max-h-96 overflow-y-auto">
+      <div className="w-full bg-gray-50 rounded-lg p-6 border border-gray-200 max-h-80 overflow-y-auto">
         <div 
             className="prose prose-sm max-w-none" 
-            dangerouslySetInnerHTML={{ __html: briefData.generatedBrief?.replace(/\n/g, '<br />') || '' }} 
+            dangerouslySetInnerHTML={renderMarkdownPreview(briefData.generatedBrief || '')} 
         />
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-        <Button onClick={handleCopy} variant="primary">
-            {copied ? (
-                <>
-                    <CheckIcon className="mr-2" /> Copied!
-                </>
-            ) : (
-                <>
-                    <CopyIcon className="mr-2 w-5 h-5" /> Copy to Clipboard
-                </>
-            )}
-        </Button>
-        <Button onClick={onStartOver} variant="secondary">
+        {savedBrief && (
+             <a href={`#/dashboard/brief/${savedBrief.id}`} className="inline-flex items-center justify-center px-6 py-3 bg-breef-accent text-white hover:bg-opacity-90 focus:ring-breef-accent shadow-sm text-base font-semibold rounded-md transition-all">
+                View My Brief <ArrowRightIcon className="ml-2 w-5 h-5"/>
+            </a>
+        )}
+        <a href="#/brief-generator" onClick={onStartOver} className="inline-flex items-center justify-center px-6 py-3 bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 focus:ring-orange-500 shadow-sm text-base font-semibold rounded-md transition-all">
           <RestartIcon className="mr-2 w-5 h-5" /> Create New Brief
-        </Button>
+        </a>
       </div>
     </div>
   );

@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Brief Generator</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'breef-bg': '#FBF8F5',
+              'breef-accent': '#E87C4D',
+              'breef-text-primary': '#0F172A',
+              'breef-text-secondary': '#6B7280',
+              'breef-border': '#E5E7EB',
+              'amo-orange': '#F97316',
+            }
+          }
+        }
+      }
+    </script>
     <style>
       @import url('https://rsms.me/inter/inter.css');
       body {
@@ -22,7 +38,7 @@
 }
 </script>
 </head>
-  <body class="bg-gray-50">
+  <body class="bg-breef-bg text-breef-text-primary">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

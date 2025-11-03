@@ -5,21 +5,6 @@ export const generateProjectBrief = async (formData: Partial<BriefData>): Promis
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
-    // Build company intelligence section if available
-    let companyIntelligenceSection = '';
-    if (formData.companyIntelligence) {
-      const ci = formData.companyIntelligence;
-      companyIntelligenceSection = `
-      
-      Company Intelligence:
-      - Company: ${ci.companyName}
-      - Industry: ${ci.industry}
-      - Description: ${ci.description}
-      ${ci.competitors.length > 0 ? `- Main Competitors: ${ci.competitors.slice(0, 5).map(c => c.name).join(', ')}` : ''}
-      ${Object.keys(ci.socialLinks).length > 0 ? `- Social Presence: ${Object.keys(ci.socialLinks).join(', ')}` : ''}
-      `;
-    }
-
     const prompt = `
       Act as a senior project manager and strategist. Based on the following project details, generate a comprehensive and professional project brief. The brief should be well-structured, clear, and ready to be presented to a development team or stakeholders.
 
@@ -27,7 +12,7 @@ export const generateProjectBrief = async (formData: Partial<BriefData>): Promis
       - Company / Brand: ${formData.companyName}
       - Website: ${formData.websiteUrl}
       - Contact Email: ${formData.email}
-      ${formData.phone ? `- Contact Phone: ${formData.phone}` : ''}${companyIntelligenceSection}
+      ${formData.phone ? `- Contact Phone: ${formData.phone}` : ''}
 
       Project Details:
       - Project Name: ${formData.projectName}
@@ -44,14 +29,13 @@ export const generateProjectBrief = async (formData: Partial<BriefData>): Promis
 ${formData.milestones || 'Not specified'}
 
       Generate a brief with the following sections:
-      1.  **Project Overview:** A concise summary of the project, its purpose, and the problem it solves.${formData.companyIntelligence ? ' Include competitive positioning and market context.' : ''}
+      1.  **Project Overview:** A concise summary of the project, its purpose, and the problem it solves.
       2.  **Key Objectives:** 2-3 specific, measurable goals for the project.
-      3.  **Target Audience:** A brief description of the ideal user.${formData.companyIntelligence ? ' Reference the company\'s industry and competitive landscape.' : ''}
+      3.  **Target Audience:** A brief description of the ideal user.
       4.  **Core Features & Deliverables:** A bulleted list of the main features and expected outcomes based on the selected categories.
       5.  **Project Management & Timeline:** A section outlining the manager, team, key milestones, and timeline.
       6.  **Suggested Tech Stack:** Recommend a modern technology stack suitable for this type of AI project.
-      ${formData.companyIntelligence && formData.companyIntelligence.competitors.length > 0 ? '7.  **Competitive Analysis:** Briefly analyze how this project positions the company against its main competitors and what competitive advantages it may provide.' : ''}
-      ${formData.companyIntelligence && formData.companyIntelligence.competitors.length > 0 ? '8.' : '7.'}  **Next Steps:** Briefly outline the immediate next steps (e.g., detailed wireframing, prototype development).
+      7.  **Next Steps:** Briefly outline the immediate next steps (e.g., detailed wireframing, prototype development).
 
       The tone should be professional, confident, and inspiring. Format the output in clean markdown.
     `;
