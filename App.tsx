@@ -3,7 +3,8 @@ import BriefWizard from './components/BriefWizard';
 import DashboardPage from './pages/DashboardPage';
 import BriefDetailPage from './pages/BriefDetailPage';
 import EditBriefPage from './pages/EditBriefPage';
-import TopNav from './components/TopNav';
+import Sidebar from './components/Sidebar';
+import SiteNav from './components/SiteNav';
 import HomePage from './pages/HomePage';
 import SiteFooter from './components/SiteFooter';
 import ServicesPage from './pages/ServicesPage';
@@ -17,6 +18,7 @@ import WhatsappPage from './pages/WhatsappPage';
 import AIAgentsPage from './pages/AIAgentsPage';
 import AIAgentDetailPage from './pages/AIAgentDetailPage';
 import HowItWorksPage from './pages/HowItWorksPage';
+import { MenuIcon, XIcon } from './components/icons';
 
 // Define routes with regex for dynamic path matching
 const routes = [
@@ -40,10 +42,12 @@ const routes = [
 
 const App: React.FC = () => {
   const [route, setRoute] = useState(window.location.hash || '#/');
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const handleHashChange = () => {
       setRoute(window.location.hash || '#/');
+      setSidebarOpen(false); // Close sidebar on navigation
     };
 
     window.addEventListener('hashchange', handleHashChange);
@@ -69,13 +73,41 @@ const App: React.FC = () => {
   
   const isAppRoute = /^\/(dashboard|brief-generator)/.test(path);
 
-  return (
-    <div className={`min-h-screen w-full ${isAppRoute ? 'bg-breef-bg' : 'bg-white'}`}>
-      {isAppRoute ? <TopNav currentPath={path} /> : null}
-      <main key={path} className={`${isAppRoute ? 'p-4 sm:p-6 md:p-8' : ''} animate-fade-in`}>
-        {renderPage()}
+  const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+    <div className="flex h-screen bg-breef-bg">
+      <Sidebar currentPath={path} isOpen={isSidebarOpen} setOpen={setSidebarOpen} />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <header className="lg:hidden bg-white/80 backdrop-blur-md border-b border-breef-border p-4 flex items-center h-16">
+          <button onClick={() => setSidebarOpen(true)} className="text-gray-500">
+            <MenuIcon className="h-6 w-6" />
+          </button>
+        </header>
+        <main className="flex-1 overflow-x-hidden overflow-y-auto">
+          <div className="p-4 sm:p-6 md:p-8 animate-fade-in">
+            {children}
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+
+  const SiteLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+    <div className="bg-white">
+      <SiteNav currentPath={path} />
+      <main key={path} className="animate-fade-in">
+        {children}
       </main>
-      {!isAppRoute && <SiteFooter />}
+      <SiteFooter />
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen w-full">
+      {isAppRoute ? (
+        <AppLayout>{renderPage()}</AppLayout>
+      ) : (
+        <SiteLayout>{renderPage()}</SiteLayout>
+      )}
     </div>
   );
 };

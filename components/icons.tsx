@@ -230,3 +230,21 @@ export const CheckCircleIcon: React.FC<{ className?: string }> = ({ className = 
         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
     </svg>
 );
+
+export const MenuIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
+    <SVGIcon className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+    </SVGIcon>
+);
+
+export const XIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
+    <SVGIcon className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </SVGIcon>
+);
+
+export const DocumentDuplicateIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
+    <SVGIcon className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 8.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v8.25A2.25 2.25 0 006 16.5h2.25m8.25-8.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-7.5A2.25 2.25 0 018.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 00-2.25 2.25v6" />
+    </SVGIcon>
+);
