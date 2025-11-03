@@ -1,11 +1,22 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Client, getClients } from '../utils/clients';
 import ClientCard from '../components/ClientCard';
 import { MagnifyingGlassIcon, UsersIcon } from '../components/icons';
 
 const ClientListPage: React.FC = () => {
-    const [allClients] = useState<Client[]>(getClients());
+    const [allClients, setAllClients] = useState<Client[]>([]);
+    const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+
+    useEffect(() => {
+        const fetchClients = async () => {
+            setLoading(true);
+            const clients = await getClients();
+            setAllClients(clients);
+            setLoading(false);
+        };
+        fetchClients();
+    }, []);
 
     const filteredClients = useMemo(() => {
         if (!searchTerm) {
@@ -30,6 +41,18 @@ const ClientListPage: React.FC = () => {
             <button className="mt-6 inline-block px-6 py-3 bg-breef-accent text-white rounded-md font-semibold hover:bg-opacity-90 transition-colors">
                 + Add Client
             </button>
+        </div>
+    );
+
+    const ClientCardSkeleton: React.FC = () => (
+        <div className="bg-white p-6 rounded-2xl border border-breef-border shadow-sm flex flex-col text-center items-center animate-pulse">
+            <div className="w-20 h-20 rounded-full bg-gray-200 mb-4"></div>
+            <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+            <div className="h-3 bg-gray-200 rounded w-1/3"></div>
+            <div className="mt-6 w-full pt-4 border-t border-breef-border/80">
+                <div className="h-5 bg-gray-200 rounded w-24 mx-auto"></div>
+            </div>
         </div>
     );
 
@@ -60,8 +83,12 @@ const ClientListPage: React.FC = () => {
                     />
                 </div>
             </div>
-
-            {filteredClients.length === 0 ? (
+            
+            {loading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {[...Array(8)].map((_, i) => <ClientCardSkeleton key={i} />)}
+                </div>
+            ) : filteredClients.length === 0 ? (
                 <EmptyState />
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

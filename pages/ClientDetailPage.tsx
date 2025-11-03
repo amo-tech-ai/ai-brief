@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { getClientById, Client } from '../utils/clients';
-import { getBriefs } from '../utils/briefs';
+import { getBriefsByClientId } from '../utils/briefs';
 import { Brief } from '../types';
 import BriefCard from '../components/BriefCard';
 import { ArrowLeftIcon, MagnifyingGlassIcon, DocumentTextIcon } from '../components/icons';
@@ -16,14 +16,17 @@ const ClientDetailPage: React.FC<ClientDetailPageProps> = ({ clientId }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const foundClient = getClientById(clientId);
-        if (foundClient) {
-            setClient(foundClient);
-            const allBriefs = getBriefs();
-            const briefsForClient = allBriefs.filter(b => b.clientId === clientId);
-            setClientBriefs(briefsForClient);
-        }
-        setLoading(false);
+        const fetchData = async () => {
+            setLoading(true);
+            const foundClient = await getClientById(clientId);
+            if (foundClient) {
+                setClient(foundClient);
+                const briefsForClient = await getBriefsByClientId(clientId);
+                setClientBriefs(briefsForClient);
+            }
+            setLoading(false);
+        };
+        fetchData();
     }, [clientId]);
 
     const filteredBriefs = useMemo(() => {

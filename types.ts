@@ -15,6 +15,8 @@ export interface BriefData {
   milestones?: string;
   // fix: Add optional clientId to associate briefs with clients.
   clientId?: string;
+  // fix: Add optional status to allow setting it on creation/update and resolve type error in briefs utility.
+  status?: 'Generated' | 'Draft';
 }
 
 export interface Brief extends BriefData {

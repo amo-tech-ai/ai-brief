@@ -21,11 +21,13 @@ const BriefDetailPage: React.FC<BriefDetailPageProps> = ({ briefId }) => {
     const editUrl = `#/dashboard/${roleFromPath}/brief/${briefId}/edit`;
 
     useEffect(() => {
-        setTimeout(() => {
-            const foundBrief = getBriefById(briefId);
+        const fetchBrief = async () => {
+            setLoading(true);
+            const foundBrief = await getBriefById(briefId);
             setBrief(foundBrief || null);
             setLoading(false);
-        }, 500);
+        };
+        fetchBrief();
     }, [briefId]);
     
     const handleRegenerate = async () => {
@@ -35,7 +37,7 @@ const BriefDetailPage: React.FC<BriefDetailPageProps> = ({ briefId }) => {
         try {
             const newContent = await generateProjectBrief(brief);
             if (!newContent) throw new Error("The AI failed to generate new content.");
-            const savedBrief = updateBrief(brief.id, { generatedBrief: newContent });
+            const savedBrief = await updateBrief(brief.id, { generatedBrief: newContent });
             if (savedBrief) setBrief(savedBrief);
             else throw new Error("Failed to save the regenerated brief.");
         } catch (err: any) {
@@ -77,7 +79,7 @@ const BriefDetailPage: React.FC<BriefDetailPageProps> = ({ briefId }) => {
             <div className="mt-10 pt-6 border-t border-breef-border flex flex-col items-center">
                 <Button variant="secondary" onClick={handleRegenerate} disabled={isRegenerating}>
                     {isRegenerating ? <LoadingSpinner /> : <RestartIcon />}
-                    {isRegenerating ? 'Regenerating...' : 'Regenerate Brief'}
+                    <span className="ml-2">{isRegenerating ? 'Regenerating...' : 'Regenerate Brief'}</span>
                 </Button>
                 {regenerationError && <p className="text-red-600 text-sm mt-4">{regenerationError}</p>}
             </div>

@@ -11,13 +11,26 @@ interface FinalStepProps {
 
 const FinalStep: React.FC<FinalStepProps> = ({ briefData, onStartOver }) => {
   const [savedBrief, setSavedBrief] = useState<Brief | null>(null);
+  const [isSaving, setIsSaving] = useState(true);
 
   useEffect(() => {
-    // Automatically save the brief when this step is reached.
-    if (briefData.projectName && briefData.generatedBrief) {
-        const newBrief = saveBrief(briefData);
-        setSavedBrief(newBrief);
-    }
+    const saveAndSetBrief = async () => {
+        if (briefData.projectName && briefData.generatedBrief) {
+            try {
+                const newBrief = await saveBrief(briefData);
+                setSavedBrief(newBrief);
+            } catch (error) {
+                console.error("Failed to save brief:", error);
+                // Optionally show an error to the user
+            } finally {
+                setIsSaving(false);
+            }
+        } else {
+            setIsSaving(false);
+        }
+    };
+
+    saveAndSetBrief();
   }, [briefData]);
 
   const renderMarkdownPreview = (text: string) => {
@@ -48,12 +61,14 @@ const FinalStep: React.FC<FinalStepProps> = ({ briefData, onStartOver }) => {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-        {savedBrief && (
-             <a href={`#/dashboard/brief/${savedBrief.id}`} className="inline-flex items-center justify-center px-6 py-3 bg-breef-accent text-white hover:bg-opacity-90 focus:ring-breef-accent shadow-sm text-base font-semibold rounded-md transition-all">
+        {isSaving ? (
+            <div className="h-12 w-48 bg-gray-200 rounded-md animate-pulse"></div>
+        ) : savedBrief && (
+             <a href={`#/dashboard/agency/brief/${savedBrief.id}`} className="inline-flex items-center justify-center px-6 py-3 bg-breef-accent text-white hover:bg-opacity-90 focus:ring-breef-accent shadow-sm text-base font-semibold rounded-md transition-all">
                 View My Brief <ArrowRightIcon className="ml-2 w-5 h-5"/>
             </a>
         )}
-        <a href="#/brief-generator" onClick={onStartOver} className="inline-flex items-center justify-center px-6 py-3 bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 focus:ring-orange-500 shadow-sm text-base font-semibold rounded-md transition-all">
+        <a href="#/new-brief" onClick={onStartOver} className="inline-flex items-center justify-center px-6 py-3 bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 focus:ring-orange-500 shadow-sm text-base font-semibold rounded-md transition-all">
           <RestartIcon className="mr-2 w-5 h-5" /> Create New Brief
         </a>
       </div>

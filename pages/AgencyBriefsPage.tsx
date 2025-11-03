@@ -11,10 +11,12 @@ const AgencyBriefsPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        setTimeout(() => {
-            setAllBriefs(getBriefs());
+        const fetchData = async () => {
+            setLoading(true);
+            setAllBriefs(await getBriefs());
             setLoading(false);
-        }, 300);
+        };
+        fetchData();
     }, []);
 
     const filteredBriefs = useMemo(() => {

@@ -1,93 +1,119 @@
 import { Brief, BriefData } from '../types';
+import { supabase } from './supabaseClient';
 
-const BRIEFS_STORAGE_KEY = 'ai_briefs';
+// Helper to map DB record (snake_case) to JS object (camelCase)
+const fromDB = (dbBrief: any): Brief => ({
+    id: dbBrief.id,
+    createdAt: dbBrief.created_at,
+    status: dbBrief.status,
+    projectName: dbBrief.project_name,
+    projectGoal: dbBrief.project_goal,
+    projectAudience: dbBrief.project_audience,
+    categories: dbBrief.categories || [],
+    budget: dbBrief.budget,
+    timeline: dbBrief.timeline,
+    generatedBrief: dbBrief.generated_brief,
+    companyName: dbBrief.company_name,
+    websiteUrl: dbBrief.website_url,
+    email: dbBrief.email,
+    phone: dbBrief.phone,
+    projectManager: dbBrief.project_manager,
+    teamMembers: dbBrief.team_members,
+    milestones: dbBrief.milestones,
+    clientId: dbBrief.client_id,
+});
 
-export const getBriefs = (): Brief[] => {
-  try {
-    const briefsJson = localStorage.getItem(BRIEFS_STORAGE_KEY);
-    const briefs: Brief[] = briefsJson ? JSON.parse(briefsJson) : [];
-
-    // MOCK DATA ASSOCIATION FOR DEMO
-    // In a real app, clientId would be saved with the brief. Here we simulate it
-    // to ensure the client detail page has data to display.
-    briefs.forEach((brief, index) => {
-        if (!brief.clientId) { // Only assign if it doesn't have one
-            if (index % 4 === 0) brief.clientId = 'client_1';
-            else if (index % 4 === 1) brief.clientId = 'client_2';
-            else if (index % 4 === 2) brief.clientId = 'client_3';
-            else brief.clientId = 'client_4';
+// Helper to map JS object (camelCase) to DB record (snake_case)
+const toDB = (briefData: Partial<BriefData>): any => {
+    const dbRecord: { [key: string]: any } = {};
+    for (const key in briefData) {
+        if (Object.prototype.hasOwnProperty.call(briefData, key)) {
+            const newKey = key.replace(/([A-Z])/g, '_$1').toLowerCase();
+            dbRecord[newKey] = (briefData as any)[key];
         }
-    });
-
-    return briefs;
-  } catch (error) {
-    console.error("Error reading briefs from localStorage", error);
-    return [];
-  }
+    }
+    // Handle specific mapping from clientId to client_id
+    if (briefData.clientId) {
+        dbRecord.client_id = briefData.clientId;
+        delete dbRecord.client_id_; // remove incorrect mapping if any
+        delete dbRecord.client_id;
+    }
+    return dbRecord;
 };
 
-export const getBriefById = (id: string): Brief | undefined => {
-    return getBriefs().find(brief => brief.id === id);
+export const getBriefs = async (): Promise<Brief[]> => {
+    const { data, error } = await supabase.from('briefs').select('*').order('created_at', { ascending: false });
+    if (error) {
+        console.error("Error reading briefs from Supabase", error);
+        return [];
+    }
+    return data ? data.map(fromDB) : [];
+};
+
+export const getBriefsByClientId = async (clientId: string): Promise<Brief[]> => {
+    const { data, error } = await supabase
+        .from('briefs')
+        .select('*')
+        .eq('client_id', clientId)
+        .order('created_at', { ascending: false });
+    
+    if (error) {
+        console.error("Error reading briefs for client from Supabase", error);
+        return [];
+    }
+    return data ? data.map(fromDB) : [];
 }
 
-export const saveBrief = (briefData: Partial<BriefData>): Brief => {
-  const briefs = getBriefs();
-  const newBrief: Brief = {
-    projectName: briefData.projectName || 'Untitled Brief',
-    projectGoal: briefData.projectGoal || '',
-    projectAudience: briefData.projectAudience || '',
-    categories: briefData.categories || [],
-    budget: briefData.budget || '',
-    timeline: briefData.timeline || '',
-    generatedBrief: briefData.generatedBrief || '',
-    companyName: briefData.companyName || '',
-    websiteUrl: briefData.websiteUrl || '',
-    email: briefData.email || '',
-    phone: briefData.phone || '',
-    projectManager: briefData.projectManager || '',
-    teamMembers: briefData.teamMembers || '',
-    milestones: briefData.milestones || '',
-    clientId: briefData.clientId,
-    id: `brief_${Date.now()}`,
-    createdAt: new Date().toISOString(),
-    status: 'Generated',
-  };
-  briefs.unshift(newBrief); // Add to the beginning
-  try {
-    localStorage.setItem(BRIEFS_STORAGE_KEY, JSON.stringify(briefs));
-  } catch (error) {
-    console.error("Error saving brief to localStorage", error);
-  }
-  return newBrief;
-};
+export const getBriefById = async (id: string): Promise<Brief | undefined> => {
+    const { data, error } = await supabase.from('briefs').select('*').eq('id', id).single();
+    if (error || !data) {
+        console.error("Error getting brief by id", error);
+        return undefined;
+    }
+    return fromDB(data);
+}
 
-export const updateBrief = (id: string, updatedData: Partial<BriefData>): Brief | null => {
-    const briefs = getBriefs();
-    const briefIndex = briefs.findIndex(b => b.id === id);
+export const saveBrief = async (briefData: Partial<BriefData>): Promise<Brief> => {
+    const dbRecord = toDB({
+        ...briefData,
+        status: 'Generated',
+    });
 
-    if (briefIndex === -1) {
-        console.error("Brief not found for updating");
-        return null;
+    const { data, error } = await supabase
+        .from('briefs')
+        .insert(dbRecord)
+        .select()
+        .single();
+    
+    if (error || !data) {
+        console.error("Error saving brief to Supabase", error);
+        throw new Error("Could not save brief.");
     }
 
-    const updatedBrief = { ...briefs[briefIndex], ...updatedData };
-    briefs[briefIndex] = updatedBrief;
-
-    try {
-        localStorage.setItem(BRIEFS_STORAGE_KEY, JSON.stringify(briefs));
-        return updatedBrief;
-    } catch (error) {
-        console.error("Error updating brief in localStorage", error);
-        return null;
-    }
+    return fromDB(data);
 };
 
-export const deleteBrief = (id: string): void => {
-    let briefs = getBriefs();
-    briefs = briefs.filter(b => b.id !== id);
-    try {
-        localStorage.setItem(BRIEFS_STORAGE_KEY, JSON.stringify(briefs));
-    } catch (error) {
-        console.error("Error deleting brief from localStorage", error);
+export const updateBrief = async (id: string, updatedData: Partial<BriefData>): Promise<Brief | null> => {
+    const dbRecord = toDB(updatedData);
+
+    const { data, error } = await supabase
+        .from('briefs')
+        .update(dbRecord)
+        .eq('id', id)
+        .select()
+        .single();
+
+    if (error) {
+        console.error("Error updating brief in Supabase", error);
+        return null;
+    }
+    
+    return data ? fromDB(data) : null;
+};
+
+export const deleteBrief = async (id: string): Promise<void> => {
+    const { error } = await supabase.from('briefs').delete().eq('id', id);
+    if (error) {
+        console.error("Error deleting brief from Supabase", error);
     }
 }

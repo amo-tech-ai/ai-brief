@@ -13,9 +13,13 @@ const EditBriefPage: React.FC<{ briefId: string }> = ({ briefId }) => {
     const detailUrl = `#/dashboard/${roleFromPath}/brief/${briefId}`;
 
     useEffect(() => {
-        const foundBrief = getBriefById(briefId);
-        setBrief(foundBrief || null);
-        setLoading(false);
+        const fetchBrief = async () => {
+            setLoading(true);
+            const foundBrief = await getBriefById(briefId);
+            setBrief(foundBrief || null);
+            setLoading(false);
+        };
+        fetchBrief();
     }, [briefId]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -23,10 +27,10 @@ const EditBriefPage: React.FC<{ briefId: string }> = ({ briefId }) => {
         setBrief(prev => prev ? { ...prev, [name]: value } : null);
     };
     
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (brief) {
-            updateBrief(briefId, brief);
+            await updateBrief(briefId, brief);
             window.location.hash = detailUrl;
         }
     };

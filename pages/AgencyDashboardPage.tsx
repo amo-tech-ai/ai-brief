@@ -81,18 +81,20 @@ const AgencyDashboardPage: React.FC = () => {
     const [allClients, setAllClients] = useState<Client[]>([]);
 
     useEffect(() => {
-        // Simulate loading from an API
-        setTimeout(() => {
-            setAllBriefs(getBriefs());
-            setAllClients(getClients());
+        const fetchData = async () => {
+            setLoading(true);
+            const [briefsData, clientsData] = await Promise.all([getBriefs(), getClients()]);
+            setAllBriefs(briefsData);
+            setAllClients(clientsData);
             setLoading(false);
-        }, 1000); // 1-second delay for demonstration
+        };
+        fetchData();
     }, []);
 
     const kpiData = {
-        revenueThisMonth: '$25,650',
+        revenueThisMonth: '$25,650', // This would come from an API
         totalClients: allClients.length,
-        avgProjectDuration: '6 Weeks',
+        avgProjectDuration: '6 Weeks', // This would be calculated
     };
 
     const recentBriefs = allBriefs.slice(0, 5);

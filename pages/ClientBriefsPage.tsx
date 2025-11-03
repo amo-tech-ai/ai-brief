@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Brief } from '../types';
-import { getBriefs } from '../utils/briefs';
+import { getBriefsByClientId } from '../utils/briefs';
 import BriefCard from '../components/BriefCard';
 import { MagnifyingGlassIcon } from '../components/icons';
 
@@ -13,12 +13,13 @@ const ClientBriefsPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        setTimeout(() => {
-            const allBriefs = getBriefs();
-            const briefsForClient = allBriefs.filter(b => b.clientId === MOCK_CLIENT_ID);
+        const fetchData = async () => {
+            setLoading(true);
+            const briefsForClient = await getBriefsByClientId(MOCK_CLIENT_ID);
             setClientBriefs(briefsForClient);
             setLoading(false);
-        }, 300);
+        };
+        fetchData();
     }, []);
 
     const filteredBriefs = useMemo(() => {
