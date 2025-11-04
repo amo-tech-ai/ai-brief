@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Brief } from '../types';
 import { getBriefs } from '../utils/briefs';
-import { ArrowRightIcon, ChartBarIcon, UsersIcon, ClockIcon, CurrencyDollarIcon } from '../components/icons';
+import { ArrowRightIcon, ChartBarIcon, UsersIcon, ClockIcon, CurrencyDollarIcon, FolderIcon } from '../components/icons';
 import { getClients, Client } from '../utils/clients';
 
-const KPICard: React.FC<{ title: string; value: string | number; icon: React.ReactNode }> = ({ title, value, icon }) => (
+const KPICard: React.FC<{ title: string; value: string | number; icon: React.ReactNode; }> = ({ title, value, icon }) => (
     <div className="bg-white p-6 rounded-2xl border border-breef-border shadow-sm flex items-start justify-between">
         <div>
             <p className="text-sm font-medium text-breef-text-secondary">{title}</p>
-            <p className="text-4xl font-bold text-breef-text-primary mt-1">{value}</p>
+            <p className={`text-4xl font-bold mt-1 text-breef-text-primary`}>{value}</p>
         </div>
         <div className="bg-orange-50 text-amo-orange p-3 rounded-lg">
             {icon}
@@ -91,11 +91,13 @@ const AgencyDashboardPage: React.FC = () => {
         fetchData();
     }, []);
 
-    const kpiData = {
-        revenueThisMonth: '$25,650', // This would come from an API
-        totalClients: allClients.length,
-        avgProjectDuration: '6 Weeks', // This would be calculated
-    };
+    const kpis = useMemo(() => [
+        { title: "Revenue This Month", value: '$25,650', icon: <CurrencyDollarIcon className="w-6 h-6"/> },
+        { title: "Total Clients", value: allClients.length, icon: <UsersIcon className="w-6 h-6"/> },
+        { title: "Avg. Project Duration", value: '6 Weeks', icon: <ClockIcon className="w-6 h-6"/> },
+        { title: "Avg. Project Value", value: '$8,550', icon: <ChartBarIcon className="w-6 h-6"/> },
+        { title: "Active Projects", value: '12', icon: <FolderIcon className="w-6 h-6"/> },
+    ], [allClients.length]);
 
     const recentBriefs = allBriefs.slice(0, 5);
     const topClients = allClients.slice(0, 3);
@@ -118,10 +120,8 @@ const AgencyDashboardPage: React.FC = () => {
             
             {loading ? (
                 <>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                        <KPICardSkeleton />
-                        <KPICardSkeleton />
-                        <KPICardSkeleton />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+                        {[...Array(5)].map((_, i) => <KPICardSkeleton key={i} />)}
                     </div>
                     <div className="mb-12">
                         <div className="flex justify-between items-center mb-4">
@@ -138,10 +138,10 @@ const AgencyDashboardPage: React.FC = () => {
             ) : (
                 <>
                     {/* KPI Cards */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                        <KPICard title="Revenue This Month" value={kpiData.revenueThisMonth} icon={<CurrencyDollarIcon className="w-6 h-6"/>} />
-                        <KPICard title="Total Clients" value={kpiData.totalClients} icon={<UsersIcon className="w-6 h-6"/>} />
-                        <KPICard title="Avg. Project Duration" value={kpiData.avgProjectDuration} icon={<ClockIcon className="w-6 h-6"/>} />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+                        {kpis.map(kpi => (
+                            <KPICard key={kpi.title} title={kpi.title} value={kpi.value} icon={kpi.icon} />
+                        ))}
                     </div>
 
                     {/* Recent Briefs */}
