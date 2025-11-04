@@ -3,31 +3,6 @@ import { ArrowRightIcon, ChatBubbleLeftRightIcon, CodeIcon, DevicePhoneMobileIco
 
 const HomePage: React.FC = () => {
 
-    const Nav = () => (
-         <header className="absolute top-0 left-0 right-0 z-20">
-            <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div className="flex justify-between items-center">
-                    <a href="#/" className="flex items-center space-x-2">
-                        <div className="bg-breef-text-primary text-white w-10 h-10 flex items-center justify-center rounded-lg font-bold text-xl">
-                            A
-                        </div>
-                        <span className="font-bold text-breef-text-primary text-2xl">AMO AI</span>
-                    </a>
-                    <div className="hidden md:flex items-center space-x-8">
-                        <a href="#/services" className="text-gray-600 hover:text-amo-orange font-medium">Services</a>
-                        <a href="#/how-it-works" className="text-gray-600 hover:text-amo-orange font-medium">How It Works</a>
-                        <a href="#pricing" className="text-gray-600 hover:text-amo-orange font-medium">Pricing</a>
-                    </div>
-                    <div>
-                        <a href="#/dashboard" className="text-gray-600 hover:text-amo-orange font-medium">
-                            Dashboard
-                        </a>
-                    </div>
-                </div>
-            </nav>
-        </header>
-    );
-
     const HeroSection = () => (
         <section className="relative bg-white pt-32 pb-20 lg:pt-48 lg:pb-28">
             <div className="absolute inset-0 bg-gray-50/50"></div>
@@ -158,7 +133,6 @@ const HomePage: React.FC = () => {
 
     return (
         <div className="bg-white">
-            <Nav />
             <HeroSection />
             <ServicesSection />
             <ProcessSection />

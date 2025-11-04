@@ -2,27 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import SiteFooter from '../components/SiteFooter';
 import { ArrowRightIcon, ArrowUpRightIcon } from '../components/icons';
 
-const Nav = () => (
-    <header className="absolute top-0 left-0 right-0 z-20">
-       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-           <div className="flex justify-between items-center">
-               <a href="#/" className="flex items-center space-x-2">
-                   <div className="bg-white/20 text-white w-10 h-10 flex items-center justify-center rounded-lg font-bold text-xl">A</div>
-                   <span className="font-bold text-white text-2xl">AMO AI</span>
-               </a>
-                <div className="hidden md:flex items-center space-x-8">
-                   <a href="#/services" className="text-gray-300 hover:text-white font-medium">Services</a>
-                   <a href="#/process" className="text-gray-300 hover:text-white font-medium">Process</a>
-                   <a href="#/projects" className="text-white font-semibold">Projects</a>
-               </div>
-               <div>
-                   <a href="#/dashboard" className="text-gray-300 hover:text-white font-medium">Dashboard</a>
-               </div>
-           </div>
-       </nav>
-   </header>
-);
-
 const CountUp: React.FC<{ end: number; suffix?: string; prefix?: string; decimals?: number }> = ({ end, suffix = '', prefix = '', decimals = 0 }) => {
     const [count, setCount] = useState(0);
     const ref = useRef<HTMLSpanElement>(null);
@@ -263,7 +242,6 @@ const FinalCTASection = () => (
 const ProjectsPage: React.FC = () => {
     return (
         <div className="bg-white">
-            <Nav />
             <main>
                 <HeroSection />
                 <FeaturedStoriesSection />

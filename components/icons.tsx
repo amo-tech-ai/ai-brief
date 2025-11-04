@@ -254,3 +254,15 @@ export const CurrencyDollarIcon: React.FC<{ className?: string }> = ({ className
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182.553-.44 1.278-.659 2.003-.659.725 0 1.45.22 2.003.659l.879.659m0 0c1.171.879 1.171 2.303 0 3.182C13.536 14.781 12.768 15 12 15c-.725 0-1.45-.22-2.003-.659m0 0l-.879-.659m-1.172 0l1.172.879m1.172 0l-1.172.879" />
   </SVGIcon>
 );
+
+export const MailIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
+    <SVGIcon className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </SVGIcon>
+);
+
+export const YouTubeIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0C.488 3.411 0 5.846 0 12s.488 8.589 4.385 8.816c3.6.245 11.626.246 15.23 0C23.512 20.589 24 18.154 24 12s-.488-8.589-4.385-8.816zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+  </svg>
+);

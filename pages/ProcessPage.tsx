@@ -11,31 +11,6 @@ import {
     ViewColumnsIcon
 } from '../components/icons';
 
-const Nav = () => (
-    <header className="absolute top-0 left-0 right-0 z-20">
-       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-           <div className="flex justify-between items-center">
-               <a href="#/" className="flex items-center space-x-2">
-                   <div className="bg-breef-text-primary text-white w-10 h-10 flex items-center justify-center rounded-lg font-bold text-xl">
-                       A
-                   </div>
-                   <span className="font-bold text-breef-text-primary text-2xl">AMO AI</span>
-               </a>
-                <div className="hidden md:flex items-center space-x-8">
-                   <a href="#/services" className="text-gray-600 hover:text-amo-orange font-medium">Services</a>
-                   <a href="#/process" className="text-amo-orange font-semibold">Process</a>
-                   <a href="#/projects" className="text-gray-600 hover:text-amo-orange font-medium">Projects</a>
-               </div>
-               <div>
-                   <a href="#/dashboard" className="text-gray-600 hover:text-amo-orange font-medium">
-                       Dashboard
-                   </a>
-               </div>
-           </div>
-       </nav>
-   </header>
-);
-
 const AnimatedClock = () => (
     <div className="w-64 h-64 lg:w-96 lg:h-96 relative flex items-center justify-center">
         <div className="absolute w-full h-full border-2 border-gray-200 rounded-full"></div>
@@ -276,7 +251,6 @@ const FinalCTASection = () => (
 const ProcessPage: React.FC = () => {
   return (
     <div className="bg-white">
-        <Nav />
         <main>
             <HeroSection />
             <TimelineSection />
